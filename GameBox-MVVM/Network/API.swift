@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Constants {
+enum API {
     
     static let apiKey = "43ecda5a2b1047dbb846a5806ff195b8"
     static let base = "https://api.rawg.io/api"
@@ -19,8 +19,8 @@ enum Constants {
     
     var url: URL {
         switch self {
-        case .getGameDetails(let page): return URL(string: Constants.base + "/games" + Constants.apiKeyParameter + "&page=\(page)")!
-        case .getGames(let id): return URL(string: Constants.base + "/games/\(id)" + Constants.apiKeyParameter)!
+        case .getGameDetails(let page): return URL(string: API.base + "/games" + API.apiKeyParameter + "&page=\(page)")!
+        case .getGames(let id): return URL(string: API.base + "/games/\(id)" + API.apiKeyParameter)!
         case .getGameImage(let backgroundImagePath):
             return URL(string: backgroundImagePath)!
         }
