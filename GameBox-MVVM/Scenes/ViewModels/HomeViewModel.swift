@@ -8,6 +8,7 @@
 import Foundation
 
 extension HomeViewModel {
+    
     fileprivate enum Constants {
         static let cellTitleHeight: CGFloat = 50
         static let cellPosterImageRatio: CGFloat = 1 / 2
@@ -27,6 +28,7 @@ protocol HomeViewModelProtocol {
     var numberOfItems: Int { get }
     var cellPadding: Double { get }
     func load()
+    //func didSelect()
     func game(index: IndexPath) -> GamesUIModel
     func calculateCellHeight(collectionViewWidth: Double) -> Double
 }
@@ -83,7 +85,6 @@ final class HomeViewModel: HomeViewModelProtocol {
                     self.delegate?.reloadData()
                 case .failure(let error):
                     print("Error: \(error.localizedDescription)")
-                    // Optionally notify the delegate about the error
                 }
             }
         }

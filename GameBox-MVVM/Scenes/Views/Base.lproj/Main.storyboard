@@ -80,7 +80,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="sDe-KO-n4C"/>
                     <navigationItem key="navigationItem" title="Games" id="Wfe-9M-RZ3"/>
                     <connections>
-                        <outlet property="collectionView" destination="fUg-PM-RsU" id="7uW-5H-a7C"/>
+                        <outlet property="collectionView" destination="fUg-PM-RsU" id="Dnd-N1-frp"/>
                         <outlet property="scrollPageView" destination="bsD-yS-GTO" id="dLt-et-kiz"/>
                         <outlet property="searchField" destination="p0J-xi-yg9" id="Bau-8D-dIp"/>
                     </connections>

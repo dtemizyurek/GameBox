@@ -11,6 +11,7 @@ import UIKit
 extension UICollectionViewCell {
     
     static var identifier: String {
+        print(String(describing: self))
         return String(describing: self)
     }
     

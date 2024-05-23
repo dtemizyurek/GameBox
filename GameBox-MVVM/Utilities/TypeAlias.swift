@@ -7,4 +7,4 @@
 
 import UIKit.UIViewController
 
-typealias ConfigureCollectionView = UICollectionViewDelegate & UICollectionViewDataSource
+typealias ConfigureCollectionView = UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout

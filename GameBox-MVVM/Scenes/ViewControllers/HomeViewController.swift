@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController  {
     //MARK: - IBOutlets
     @IBOutlet weak var searchField: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -22,7 +22,14 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(cellType: GamesCollectionViewCell.self)
+        print(viewModel.numberOfItems)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.load()
     }
     
 }
@@ -35,24 +42,25 @@ extension HomeViewController : ConfigureCollectionView {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: GamesCollectionViewCell.self, indexPath: indexPath)
-        if let games = viewModel.game(index: indexPath) {
-            cell.configure(games: games)
-        }
+        let games = viewModel.game(index: indexPath)
+        cell.configure(games: games)
+        
         return cell
     }
 }
 
 extension HomeViewController: HomeViewModelDelegate {
     func showLoadingView() {
-        showLoadingView()
+        showLoading()
     }
     
     func hideLoadingView() {
-        <#code#>
+        hideLoading()
     }
     
     func reloadData() {
-        <#code#>
+        collectionView.reloadData()
     }
 }
 
+extension HomeViewController: LoadingShowable {}

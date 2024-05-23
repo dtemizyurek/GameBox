@@ -12,7 +12,7 @@ protocol APIRequestProtocol {
     func getGamesDetails(id: String, completion: @escaping (Result<GameDetail, Error>) -> Void)
 }
 
-class APIRequest: APIRequestProtocol {
+final class APIRequest: APIRequestProtocol {
     
     func getGames(page: Int, completion: @escaping (Result<Game, Error>) -> Void) {
         APIRequest.getRequestForGamesAndDetails(url: API.getGames(page).url, jsonType: Game.self) { result in
@@ -27,7 +27,7 @@ class APIRequest: APIRequestProtocol {
     }
     
     private static func getRequestForGamesAndDetails<T: Decodable>(url: URL, jsonType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-        print("API Request URL: \(url)") // Log the URL
+        print("API Request URL: \(url)") 
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("API Request Error: \(error.localizedDescription)") // Log the error
@@ -35,7 +35,7 @@ class APIRequest: APIRequestProtocol {
                 return
             }
             guard let data = data else {
-                let error = NSError(domain: "YourAppErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"]) // Create an error when no data is received
+                let error = NSError(domain: "YourAppErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"])
                 print("API Request Error: No data received")
                 completion(.failure(error))
                 return

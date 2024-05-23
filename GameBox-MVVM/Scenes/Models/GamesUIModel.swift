@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct GamesUIModel {
     var id: Int
     var rating: Double?
