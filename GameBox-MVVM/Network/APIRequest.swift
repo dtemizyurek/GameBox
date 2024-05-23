@@ -7,55 +7,54 @@
 
 import Foundation
 
-public protocol APIRequestProtocol {
-    func getGames(completion: @escaping (Result<[Game], Error>) -> Void)
-    func getGameDetails(completion: @escaping (Result<[Game], Error>) -> Void)
+protocol APIRequestProtocol {
+    func getGames(page: Int, completion: @escaping (Result<Game, Error>) -> Void)
+    func getGamesDetails(id: String, completion: @escaping (Result<GameDetail, Error>) -> Void)
 }
 
-public class APIRequest {
+class APIRequest: APIRequestProtocol {
     
-    static func getGames(page: Int, completion: @escaping ([GameResult], Error?) -> Void) {
-        APIRequest.getRequestForGamesAndDetails(url: API.getGames(page).url, jsonType: Game.self) { response, error in
-            if let response = response {
-                completion(response.results, nil)
-            } else {
-                completion([], error)
-            }
+    func getGames(page: Int, completion: @escaping (Result<Game, Error>) -> Void) {
+        APIRequest.getRequestForGamesAndDetails(url: API.getGames(page).url, jsonType: Game.self) { result in
+            completion(result)
         }
     }
     
-    static func getGameDetails(id: String, completion: @escaping(GameDetail?,Error?) -> Void) {
-        getRequestForGamesAndDetails(url: API.getGameDetails(id).url, jsonType: GameDetail.self) { response, error in
-            if let response = response {
-                completion(response,nil)
-            } else {
-                completion(nil, error)
-            }
+    func getGamesDetails(id: String, completion: @escaping (Result<GameDetail, Error>) -> Void) {
+        APIRequest.getRequestForGamesAndDetails(url: API.getGameDetails(id).url, jsonType: GameDetail.self) { result in
+            completion(result)
         }
     }
     
-    static func getRequestForGamesAndDetails<JSONType: Decodable>(url: URL, jsonType: JSONType.Type, completion: @escaping (JSONType?, Error?) -> Void) {
-        DispatchQueue.main.async(qos: .utility) {
-            let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
-                
-                if error != nil {
-                    completion(nil, error)
-                    return
-                }
-                guard let data = data else {
-                    completion(nil, error)
-                    return
-                }
-                
+    private static func getRequestForGamesAndDetails<T: Decodable>(url: URL, jsonType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+        print("API Request URL: \(url)") // Log the URL
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("API Request Error: \(error.localizedDescription)") // Log the error
+                completion(.failure(error))
+                return
+            }
+            guard let data = data else {
+                let error = NSError(domain: "YourAppErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"]) // Create an error when no data is received
+                print("API Request Error: No data received")
+                completion(.failure(error))
+                return
+            }
+            
+            do {
                 let decoder = JSONDecoder()
-                do {
-                    let results = try decoder.decode(JSONType.self, from: data)
-                    completion(results, nil)
-                } catch {
-                    completion(nil, error)
-                }
+                let decodedData = try decoder.decode(T.self, from: data)
+                print("API Request Success: Data decoded successfully") // Log successful decoding
+                completion(.success(decodedData))
+            } catch {
+                print("API Request Error: \(error.localizedDescription)") // Log the decoding error
+                completion(.failure(error))
             }
-            dataTask.resume()
-        }
+        }.resume()
     }
 }
+
+enum APIError: Error {
+    case unknown
+}
+

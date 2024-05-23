@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - GameDetail
-struct GameDetail: Decodable {
+public struct GameDetail: Decodable {
     let id: Int
     let slug, name, nameOriginal, welcomeDescription: String
     let metacritic: Int

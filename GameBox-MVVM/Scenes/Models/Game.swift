@@ -1,82 +1,71 @@
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
 //
-//  GameModel.swift
-//  GameBox-MVVM
-//
-//  Created by Doğukan Temizyürek on 21.05.2024.
-//
+//   let games = try? JSONDecoder().decode(Games.self, from: jsonData)
 
 import Foundation
 
-// MARK: - Game
-public struct Game: Decodable {
-    let count: Int
-    let next, previous: String
-    let results: [GameResult]
-    let seoTitle, seoDescription, seoKeywords, seoH1: String
-    let noindex, nofollow: Bool
-    let welcomeDescription: String
-    let filters: Filters
-    let nofollowCollections: [String]
+// MARK: - Games
+struct Game: Decodable {
+    let id: Int?
+    let counts: Int?
+    let next: String?
+    let results: [GameResults]?
+    let noindex, nofollow: Bool?
+    let description: String?
+    let filters: Filters?
+    let nofollowCollections: [String]?
 
     enum CodingKeys: String, CodingKey {
-        case count, next, previous, results
-        case seoTitle = "seo_title"
-        case seoDescription = "seo_description"
-        case seoKeywords = "seo_keywords"
-        case seoH1 = "seo_h1"
-        case noindex, nofollow
-        case welcomeDescription = "description"
-        case filters
+        case counts, next, results,id
+        case noindex, nofollow, description, filters
         case nofollowCollections = "nofollow_collections"
     }
 }
 
 // MARK: - Filters
-struct Filters: Decodable {
-    let years: [FiltersYear]
+struct Filters: Codable {
+    let years: [FiltersYear]?
 }
 
 // MARK: - FiltersYear
-struct FiltersYear: Decodable {
-    let from, to: Int
-    let filter: String
-    let decade: Int
-    let years: [YearYear]
-    let nofollow: Bool
-    let count: Int
+struct FiltersYear: Codable {
+    let from, to: Int?
+    let filter: String?
+    let decade: Int?
+    let years: [YearYear]?
+    let nofollow: Bool?
+    let count: Int?
 }
 
 // MARK: - YearYear
-struct YearYear: Decodable {
-    let year, count: Int
-    let nofollow: Bool
+struct YearYear: Codable {
+    let year, count: Int?
+    let nofollow: Bool?
 }
 
-// MARK: - GameResult
-struct GameResult: Decodable {
-    let id: Int
-    let slug, name, released: String
-    let tba: Bool
-    let backgroundImage: String
-    let rating: Double
-    let ratingTop: Int
-    let ratings: [Rating]
-    let ratingsCount, reviewsTextCount, added: Int
-    let addedByStatus: AddedByStatus
-    let metacritic: Int?
-    let playtime, suggestionsCount: Int
-    let updated: String
-    let userGame: String?
-    let reviewsCount: Int
-    let saturatedColor, dominantColor: Color
-    let platforms: [PlatformElement]
-    let parentPlatforms: [ParentPlatform]
-    let genres: [Genre]
-    let stores: [Store]
-    let clip: String?
-    let tags: [Genre]
+// MARK: - Result
+struct GameResults: Codable {
+    let id: Int?
+    let slug, name, released: String?
+    let tba: Bool?
+    let backgroundImage: String?
+    let rating: Double?
+    let ratingTop: Int?
+    let ratings: [Rating]?
+    let ratingsCount, reviewsTextCount, added: Int?
+    let addedByStatus: AddedByStatus?
+    let metacritic, playtime, suggestionsCount: Int?
+    let updated: String?
+    let reviewsCount: Int?
+    let saturatedColor, dominantColor: Color?
+    let platforms: [PlatformElement]?
+    let parentPlatforms: [ParentPlatform]?
+    let genres: [Genre]?
+    let stores: [Store]?
+    let tags: [Genre]?
     let esrbRating: EsrbRating?
-    let shortScreenshots: [ShortScreenshot]
+    let shortScreenshots: [ShortScreenshot]?
 
     enum CodingKeys: String, CodingKey {
         case id, slug, name, released, tba
@@ -91,22 +80,21 @@ struct GameResult: Decodable {
         case metacritic, playtime
         case suggestionsCount = "suggestions_count"
         case updated
-        case userGame = "user_game"
         case reviewsCount = "reviews_count"
         case saturatedColor = "saturated_color"
         case dominantColor = "dominant_color"
         case platforms
         case parentPlatforms = "parent_platforms"
-        case genres, stores, clip, tags
+        case genres, stores, tags
         case esrbRating = "esrb_rating"
         case shortScreenshots = "short_screenshots"
     }
 }
 
 // MARK: - AddedByStatus
-struct AddedByStatus: Decodable {
-    let yet, owned, beaten, toplay: Int
-    let dropped, playing: Int
+struct AddedByStatus: Codable {
+    let yet, owned, beaten, toplay: Int?
+    let dropped, playing: Int?
 }
 
 enum Color: String, Codable {
@@ -114,18 +102,18 @@ enum Color: String, Codable {
 }
 
 // MARK: - EsrbRating
-struct EsrbRating: Decodable {
-    let id: Int
-    let name, slug: String
+struct EsrbRating: Codable {
+    let id: Int?
+    let name, slug: String?
 }
 
 // MARK: - Genre
-struct Genre: Decodable {
-    let id: Int
-    let name, slug: String
-    let gamesCount: Int
-    let imageBackground: String
-    let domain: String?
+struct Genre: Codable {
+    let id: Int?
+    let name, slug: String?
+    let gamesCount: Int?
+    let imageBackground: String?
+    let domain: Domain?
     let language: Language?
 
     enum CodingKeys: String, CodingKey {
@@ -136,19 +124,31 @@ struct Genre: Decodable {
     }
 }
 
+enum Domain: String, Codable {
+    case appsAppleCOM = "apps.apple.com"
+    case epicgamesCOM = "epicgames.com"
+    case gogCOM = "gog.com"
+    case marketplaceXboxCOM = "marketplace.xbox.com"
+    case microsoftCOM = "microsoft.com"
+    case nintendoCOM = "nintendo.com"
+    case playGoogleCOM = "play.google.com"
+    case storePlaystationCOM = "store.playstation.com"
+    case storeSteampoweredCOM = "store.steampowered.com"
+}
+
 enum Language: String, Codable {
     case eng = "eng"
 }
 
 // MARK: - ParentPlatform
-struct ParentPlatform: Decodable {
-    let platform: EsrbRating
+struct ParentPlatform: Codable {
+    let platform: EsrbRating?
 }
 
 // MARK: - PlatformElement
-struct PlatformElement: Decodable {
-    let platform: PlatformPlatform
-    let releasedAt: String
+struct PlatformElement: Codable {
+    let platform: PlatformPlatform?
+    let releasedAt: String?
     let requirementsEn, requirementsRu: Requirements?
 
     enum CodingKeys: String, CodingKey {
@@ -160,18 +160,15 @@ struct PlatformElement: Decodable {
 }
 
 // MARK: - PlatformPlatform
-struct PlatformPlatform: Decodable {
-    let id: Int
-    let name, slug: String
-    let image: String?
-    let yearEnd: String?
+struct PlatformPlatform: Codable {
+    let id: Int?
+    let name, slug: String?
     let yearStart: Int?
-    let gamesCount: Int
-    let imageBackground: String
+    let gamesCount: Int?
+    let imageBackground: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, slug, image
-        case yearEnd = "year_end"
+        case id, name, slug
         case yearStart = "year_start"
         case gamesCount = "games_count"
         case imageBackground = "image_background"
@@ -179,20 +176,19 @@ struct PlatformPlatform: Decodable {
 }
 
 // MARK: - Requirements
-struct Requirements: Decodable {
-    let minimum: String
-    let recommended: String?
+struct Requirements: Codable {
+    let minimum, recommended: String?
 }
 
 // MARK: - Rating
-struct Rating: Decodable {
-    let id: Int
-    let title: Title
-    let count: Int
-    let percent: Double
+struct Rating: Codable {
+    let id: Int?
+    let title: Title?
+    let count: Int?
+    let percent: Double?
 }
 
-enum Title: String, Decodable {
+enum Title: String, Codable {
     case exceptional = "exceptional"
     case meh = "meh"
     case recommended = "recommended"
@@ -200,14 +196,14 @@ enum Title: String, Decodable {
 }
 
 // MARK: - ShortScreenshot
-struct ShortScreenshot: Decodable {
-    let id: Int
-    let image: String
+struct ShortScreenshot: Codable {
+    let id: Int?
+    let image: String?
 }
 
 // MARK: - Store
-struct Store: Decodable {
-    let id: Int
-    let store: Genre
+struct Store: Codable {
+    let id: Int?
+    let store: Genre?
 }
 
