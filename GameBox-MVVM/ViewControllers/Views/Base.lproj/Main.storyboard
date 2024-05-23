@@ -5,25 +5,84 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home-->
+        <!--Games-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="GameBox_MVVM" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p0J-xi-yg9">
+                                <rect key="frame" x="8" y="111" width="377" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="RQH-dj-BbG"/>
+                                </connections>
+                            </searchBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsD-yS-GTO">
+                                <rect key="frame" x="8" y="175" width="377" height="200"/>
+                                <subviews>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="3Uv-wr-o1r">
+                                        <rect key="frame" x="8" y="166" width="361" height="26"/>
+                                        <color key="tintColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </pageControl>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="3Uv-wr-o1r" secondAttribute="bottom" constant="8" id="DFO-xs-iMb"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Uv-wr-o1r" secondAttribute="trailing" constant="8" id="U9z-A3-CxM"/>
+                                    <constraint firstItem="3Uv-wr-o1r" firstAttribute="centerX" secondItem="bsD-yS-GTO" secondAttribute="centerX" id="YYE-PF-a7d"/>
+                                    <constraint firstAttribute="height" constant="200" id="gq1-gy-CiI"/>
+                                    <constraint firstItem="3Uv-wr-o1r" firstAttribute="leading" secondItem="bsD-yS-GTO" secondAttribute="leading" constant="8" id="nPC-lk-KN5"/>
+                                </constraints>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fUg-PM-RsU">
+                                <rect key="frame" x="0.0" y="383" width="393" height="386"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LOW-8w-fWM">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="oz6-yc-JZk">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FOX-19-ptO">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bsD-yS-GTO" secondAttribute="trailing" constant="8" id="8KX-3j-iBo"/>
+                            <constraint firstItem="fUg-PM-RsU" firstAttribute="top" secondItem="bsD-yS-GTO" secondAttribute="bottom" constant="8" id="Lwn-zB-ZRL"/>
+                            <constraint firstItem="fUg-PM-RsU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="RG0-l3-JiS"/>
+                            <constraint firstItem="p0J-xi-yg9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Wd2-Ft-m8D"/>
+                            <constraint firstItem="bsD-yS-GTO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="Zem-5S-JKf"/>
+                            <constraint firstItem="fUg-PM-RsU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dXN-6b-bDv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="p0J-xi-yg9" secondAttribute="trailing" constant="8" id="dkR-XX-1EL"/>
+                            <constraint firstItem="bsD-yS-GTO" firstAttribute="top" secondItem="p0J-xi-yg9" secondAttribute="bottom" constant="8" id="gFO-pl-1TM"/>
+                            <constraint firstItem="p0J-xi-yg9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="qyU-qn-Dxi"/>
+                            <constraint firstItem="fUg-PM-RsU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rC3-2Z-LEq"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="sDe-KO-n4C"/>
-                    <navigationItem key="navigationItem" id="Wfe-9M-RZ3"/>
+                    <navigationItem key="navigationItem" title="Games" id="Wfe-9M-RZ3"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1830" y="-326"/>
+            <point key="canvasLocation" x="1829.7709923664122" y="-326.05633802816902"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UZZ-pR-Xtr">
@@ -50,6 +109,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="uM9-1i-0l8"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Jty-kV-QGQ">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -82,6 +142,12 @@
     <resources>
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="house" catalog="system" width="128" height="104"/>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

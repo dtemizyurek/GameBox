@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Game
-struct Game: Codable {
+struct Game: Decodable {
     let count: Int
     let next, previous: String
     let results: [GameResult]
@@ -32,12 +32,12 @@ struct Game: Codable {
 }
 
 // MARK: - Filters
-struct Filters: Codable {
+struct Filters: Decodable {
     let years: [FiltersYear]
 }
 
 // MARK: - FiltersYear
-struct FiltersYear: Codable {
+struct FiltersYear: Decodable {
     let from, to: Int
     let filter: String
     let decade: Int
@@ -47,13 +47,13 @@ struct FiltersYear: Codable {
 }
 
 // MARK: - YearYear
-struct YearYear: Codable {
+struct YearYear: Decodable {
     let year, count: Int
     let nofollow: Bool
 }
 
 // MARK: - GameResult
-struct GameResult: Codable {
+struct GameResult: Decodable {
     let id: Int
     let slug, name, released: String
     let tba: Bool
@@ -66,14 +66,14 @@ struct GameResult: Codable {
     let metacritic: Int?
     let playtime, suggestionsCount: Int
     let updated: String
-    let userGame: JSONNull?
+    let userGame: String?
     let reviewsCount: Int
     let saturatedColor, dominantColor: Color
     let platforms: [PlatformElement]
     let parentPlatforms: [ParentPlatform]
     let genres: [Genre]
     let stores: [Store]
-    let clip: JSONNull?
+    let clip: String?
     let tags: [Genre]
     let esrbRating: EsrbRating?
     let shortScreenshots: [ShortScreenshot]
@@ -104,7 +104,7 @@ struct GameResult: Codable {
 }
 
 // MARK: - AddedByStatus
-struct AddedByStatus: Codable {
+struct AddedByStatus: Decodable {
     let yet, owned, beaten, toplay: Int
     let dropped, playing: Int
 }
@@ -114,13 +114,13 @@ enum Color: String, Codable {
 }
 
 // MARK: - EsrbRating
-struct EsrbRating: Codable {
+struct EsrbRating: Decodable {
     let id: Int
     let name, slug: String
 }
 
 // MARK: - Genre
-struct Genre: Codable {
+struct Genre: Decodable {
     let id: Int
     let name, slug: String
     let gamesCount: Int
@@ -141,12 +141,12 @@ enum Language: String, Codable {
 }
 
 // MARK: - ParentPlatform
-struct ParentPlatform: Codable {
+struct ParentPlatform: Decodable {
     let platform: EsrbRating
 }
 
 // MARK: - PlatformElement
-struct PlatformElement: Codable {
+struct PlatformElement: Decodable {
     let platform: PlatformPlatform
     let releasedAt: String
     let requirementsEn, requirementsRu: Requirements?
@@ -160,10 +160,11 @@ struct PlatformElement: Codable {
 }
 
 // MARK: - PlatformPlatform
-struct PlatformPlatform: Codable {
+struct PlatformPlatform: Decodable {
     let id: Int
     let name, slug: String
-    let image, yearEnd: JSONNull?
+    let image: String?
+    let yearEnd: String?
     let yearStart: Int?
     let gamesCount: Int
     let imageBackground: String
@@ -178,20 +179,20 @@ struct PlatformPlatform: Codable {
 }
 
 // MARK: - Requirements
-struct Requirements: Codable {
+struct Requirements: Decodable {
     let minimum: String
     let recommended: String?
 }
 
 // MARK: - Rating
-struct Rating: Codable {
+struct Rating: Decodable {
     let id: Int
     let title: Title
     let count: Int
     let percent: Double
 }
 
-enum Title: String, Codable {
+enum Title: String, Decodable {
     case exceptional = "exceptional"
     case meh = "meh"
     case recommended = "recommended"
@@ -199,42 +200,14 @@ enum Title: String, Codable {
 }
 
 // MARK: - ShortScreenshot
-struct ShortScreenshot: Codable {
+struct ShortScreenshot: Decodable {
     let id: Int
     let image: String
 }
 
 // MARK: - Store
-struct Store: Codable {
+struct Store: Decodable {
     let id: Int
     let store: Genre
-}
-
-// MARK: - Encode/decode helpers
-
-class JSONNull: Codable, Hashable {
-
-    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
-        return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        // Since JSONNull instances are always equal, the hash value can be a constant.
-        hasher.combine(0)
-    }
-
-    public init() {}
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if !container.decodeNil() {
-            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encodeNil()
-    }
 }
 
