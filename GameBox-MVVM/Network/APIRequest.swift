@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct APIRequest {
+public protocol APIRequestProtocol {
+    func getGames(completion: @escaping (Result<[Game], Error>) -> Void)
+    func getGameDetails(completion: @escaping (Result<[Game], Error>) -> Void)
+}
+
+public class APIRequest {
     
     static func getGames(page: Int, completion: @escaping ([GameResult], Error?) -> Void) {
         APIRequest.getRequestForGamesAndDetails(url: API.getGames(page).url, jsonType: Game.self) { response, error in

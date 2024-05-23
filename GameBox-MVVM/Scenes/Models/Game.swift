@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Game
-struct Game: Decodable {
+public struct Game: Decodable {
     let count: Int
     let next, previous: String
     let results: [GameResult]
