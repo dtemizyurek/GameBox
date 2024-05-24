@@ -10,38 +10,49 @@ import UIKit
 
 class GamePageViewController: UIPageViewController {
     fileprivate var items: [UIViewController] = []
-    private var viewModel: GamePageViewModel!
+    private var gameSource: [GamesUIModel]?
     private var currentIndex: Int?
+    private var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
         delegate = self
-        decoratePageControl()        
-        viewModel = GamePageViewModel()
-        viewModel.delegate = self
+        print(items.count)
+        decoratePageControl()
+        setupTimer()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
     }
     
     fileprivate func decoratePageControl() {
-        let pc = UIPageControl.appearance(whenContainedInInstancesOf: [GamePageViewController.self])
-        pc.currentPageIndicatorTintColor = .orange
-        pc.pageIndicatorTintColor = .gray
+        let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [GamePageViewController.self])
+        pageControl.currentPageIndicatorTintColor = .orange
+        pageControl.pageIndicatorTintColor = .gray
+    }
+    
+    @objc func changeImage() {
+        goToNextPage()
+    }
+    
+    func goToNextPage() {
+        guard let currentViewController = self.viewControllers?.first else { return }
+        guard let nextViewController = dataSource?.pageViewController(self, viewControllerAfter: currentViewController) else { return }
+        setViewControllers([nextViewController], direction: .forward, animated: true, completion: nil)
     }
     
     func populateItems(gameSource: [GamesUIModel]) {
-        viewModel.populateGames(with: gameSource)
-    }
-}
-
-extension GamePageViewController: GamePageViewModelDelegate {
-    func didUpdateGames() {
-        items.removeAll()
-        for game in viewModel.gameSource {
-            let vc = UIViewController()
+        self.gameSource = gameSource
+        self.items.removeAll()
+        for game in gameSource {
+            let c = UIViewController()
             let gameView = GamePageView(frame: view.frame)
-            vc.view.addSubview(gameView)
-            gameView.setImage(from: game.backgroundImage ?? "person")
-            items.append(vc)
+            c.view.addSubview(gameView)
+            gameView.setImage(from: game.backgroundImage)
+            items.append(c)
         }
         
         if let firstViewController = items.first {
@@ -49,10 +60,24 @@ extension GamePageViewController: GamePageViewModelDelegate {
         }
     }
     
-    func didFailWithError(_ error: Error) {
-        print("Failed to load games with error: \(error.localizedDescription)")
+    private func setupTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(changeImage), userInfo: nil, repeats: true)
     }
 }
+
+class GamePageView: UIImageView {
+    func setImage(from urlString: String?) {
+        guard let urlString = urlString else { return }
+        let apiRequest = APIRequest()
+        apiRequest.getGameImage(path: urlString) { [weak self] data, error in
+            guard let self = self, let data = data, error == nil else { return }
+            DispatchQueue.main.async {
+                self.image = UIImage(data: data)
+            }
+        }
+    }
+}
+
 
 extension GamePageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
@@ -74,13 +99,8 @@ extension GamePageViewController: UIPageViewControllerDataSource, UIPageViewCont
         }
         
         let previousIndex = viewControllerIndex - 1
-        
         guard previousIndex >= 0 else {
             return items.last
-        }
-        
-        guard items.count > previousIndex else {
-            return nil
         }
         
         return items[previousIndex]
@@ -92,12 +112,8 @@ extension GamePageViewController: UIPageViewControllerDataSource, UIPageViewCont
         }
         
         let nextIndex = viewControllerIndex + 1
-        guard items.count != nextIndex else {
+        guard nextIndex < items.count else {
             return items.first
-        }
-        
-        guard items.count > nextIndex else {
-            return nil
         }
         
         return items[nextIndex]
@@ -112,5 +128,3 @@ extension GamePageViewController: UIPageViewControllerDataSource, UIPageViewCont
         }
     }
 }
-
-

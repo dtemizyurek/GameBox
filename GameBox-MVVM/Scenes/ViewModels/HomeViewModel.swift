@@ -85,16 +85,10 @@ final class HomeViewModel: HomeViewModelProtocol {
         switch response {
         case .success(let game):
             self.games.append(contentsOf: game.results ?? [])
-            self.logGameNames()
             self.delegate?.reloadData()
         case .failure(let error):
             self.delegate?.showError("Failed to load games: \(error.localizedDescription)")
         }
-    }
-    
-    private func logGameNames() {
-        let names = gameNames.joined(separator: ", ")
-        print("Fetched Games: \(names)")
     }
     
     func getGames() -> [GamesUIModel] {

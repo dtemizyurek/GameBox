@@ -70,9 +70,7 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="KJs-IZ-MiR" firstAttribute="leading" secondItem="eJC-TP-00n" secondAttribute="trailing" constant="8" id="9a8-fc-pph"/>
-                                    <constraint firstItem="KJs-IZ-MiR" firstAttribute="top" secondItem="xj0-Z5-6Xe" secondAttribute="top" constant="8" id="hC9-wo-bbn"/>
-                                    <constraint firstAttribute="trailing" secondItem="KJs-IZ-MiR" secondAttribute="trailing" constant="8" id="qOg-Gd-Fdf"/>
+                                    <constraint firstAttribute="trailing" secondItem="KJs-IZ-MiR" secondAttribute="trailing" id="il5-g2-UAH"/>
                                 </constraints>
                             </stackView>
                         </subviews>
