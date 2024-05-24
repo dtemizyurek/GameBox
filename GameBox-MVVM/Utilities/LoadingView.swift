@@ -5,39 +5,63 @@
 //  Created by Doğukan Temizyürek on 23.05.2024.
 //
 import UIKit
+import Lottie
 
 class LoadingView {
     
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var animationView: LottieAnimationView?
     static let shared = LoadingView()
     
-    var blurView: UIVisualEffectView = UIVisualEffectView()
+    private var blurView: UIVisualEffectView
     
     private init() {
+        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.frame = UIScreen.main.bounds
+        
         configure()
     }
     
-    func configure() {
-        
-        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        blurView.frame = UIWindow(frame: UIScreen.main.bounds).frame
-        activityIndicator.center = blurView.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = .large
-        blurView.contentView.addSubview(activityIndicator)
-        
+    private func configure() {
+        animationView = LottieAnimationView(name: "pacman") 
+        if let animationView = animationView {
+            animationView.translatesAutoresizingMaskIntoConstraints = false
+            animationView.loopMode = .loop
+            animationView.contentMode = .scaleAspectFit
+            blurView.contentView.addSubview(animationView)
+            
+            NSLayoutConstraint.activate([
+                animationView.centerXAnchor.constraint(equalTo: blurView.centerXAnchor),
+                animationView.centerYAnchor.constraint(equalTo: blurView.centerYAnchor),
+                animationView.widthAnchor.constraint(equalToConstant: 200),
+                animationView.heightAnchor.constraint(equalToConstant: 200)
+            ])
+        }
     }
     
     func startLoading() {
-        UIApplication.shared.windows.first?.addSubview(blurView)
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.startAnimating()
+        guard let window = UIApplication.shared.windows.first else {
+            return
+        }
+        
+        if blurView.superview == nil {
+            window.addSubview(blurView)
+            
+            NSLayoutConstraint.activate([
+                blurView.leadingAnchor.constraint(equalTo: window.leadingAnchor),
+                blurView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
+                blurView.topAnchor.constraint(equalTo: window.topAnchor),
+                blurView.bottomAnchor.constraint(equalTo: window.bottomAnchor)
+            ])
+        }
+        
+        animationView?.play()
     }
     
     func hideLoading() {
-        activityIndicator.stopAnimating()
+        animationView?.stop()
         blurView.removeFromSuperview()
     }
-    
 }
+
+

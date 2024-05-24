@@ -19,10 +19,11 @@ enum API {
     
     var url: URL {
         switch self {
-        case .getGameDetails(let page): return URL(string: API.base + "/games" + API.apiKeyParameter + "&page=\(page)")!
-        case .getGames(let id): return URL(string: API.base + "/games/\(id)" + API.apiKeyParameter)!
+        case .getGames(let page): return URL(string: API.base + "/games" + API.apiKeyParameter + "&page=\(page)")!
+        case .getGameDetails(let id): return URL(string: API.base + "/games/\(id)" + API.apiKeyParameter)!
         case .getGameImage(let backgroundImagePath):
             return URL(string: backgroundImagePath)!
+            
         }
     }
 }

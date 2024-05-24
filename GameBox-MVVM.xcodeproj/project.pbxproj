@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45037DEB2C00E5A60061F2F7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45037DEA2C00E5A60061F2F7 /* Lottie */; };
+		45037DED2C00E6E90061F2F7 /* mario.json in Resources */ = {isa = PBXBuildFile; fileRef = 45037DEC2C00E6E90061F2F7 /* mario.json */; };
+		45037DEF2C00E7530061F2F7 /* pacman.json in Resources */ = {isa = PBXBuildFile; fileRef = 45037DEE2C00E7530061F2F7 /* pacman.json */; };
 		45340F982BFF7491002D3A6B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45340F972BFF7491002D3A6B /* HomeViewModel.swift */; };
 		45340F9A2BFF7F0A002D3A6B /* GamesUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45340F992BFF7F0A002D3A6B /* GamesUIModel.swift */; };
 		45340F9D2BFF8028002D3A6B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45340F9C2BFF8028002D3A6B /* LoadingView.swift */; };
@@ -32,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		45037DEC2C00E6E90061F2F7 /* mario.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mario.json; sourceTree = "<group>"; };
+		45037DEE2C00E7530061F2F7 /* pacman.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pacman.json; sourceTree = "<group>"; };
 		45340F972BFF7491002D3A6B /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		45340F992BFF7F0A002D3A6B /* GamesUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesUIModel.swift; sourceTree = "<group>"; };
 		45340F9C2BFF8028002D3A6B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -63,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45037DEB2C00E5A60061F2F7 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +111,8 @@
 				45EF7CB42BFB7D840058F562 /* Network */,
 				45EF7CA72BF7E8550058F562 /* Info.plist */,
 				45EF7CA22BF7E8550058F562 /* Assets.xcassets */,
+				45037DEC2C00E6E90061F2F7 /* mario.json */,
+				45037DEE2C00E7530061F2F7 /* pacman.json */,
 				45EF7C9F2BF7E8540058F562 /* GameBox_MVVM.xcdatamodeld */,
 			);
 			path = "GameBox-MVVM";
@@ -211,6 +219,9 @@
 			dependencies = (
 			);
 			name = "GameBox-MVVM";
+			packageProductDependencies = (
+				45037DEA2C00E5A60061F2F7 /* Lottie */,
+			);
 			productName = "GameBox-MVVM";
 			productReference = 45EF7C932BF7E8540058F562 /* GameBox-MVVM.app */;
 			productType = "com.apple.product-type.application";
@@ -239,6 +250,9 @@
 				Base,
 			);
 			mainGroup = 45EF7C8A2BF7E8540058F562;
+			packageReferences = (
+				45037DE92C00E5A50061F2F7 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 45EF7C942BF7E8540058F562 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -254,6 +268,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				45340FA92C0004CD002D3A6B /* GamesCollectionViewCell.xib in Resources */,
+				45037DEF2C00E7530061F2F7 /* pacman.json in Resources */,
+				45037DED2C00E6E90061F2F7 /* mario.json in Resources */,
 				45EF7CA32BF7E8550058F562 /* Assets.xcassets in Resources */,
 				45EF7CA62BF7E8550058F562 /* Base in Resources */,
 				45EF7C9E2BF7E8540058F562 /* Base in Resources */,
@@ -507,6 +523,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		45037DE92C00E5A50061F2F7 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		45037DEA2C00E5A60061F2F7 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45037DE92C00E5A50061F2F7 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		45EF7C9F2BF7E8540058F562 /* GameBox_MVVM.xcdatamodeld */ = {

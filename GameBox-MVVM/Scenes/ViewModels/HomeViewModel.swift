@@ -7,16 +7,6 @@
 
 import Foundation
 
-extension HomeViewModel {
-    
-    fileprivate enum Constants {
-        static let cellTitleHeight: CGFloat = 50
-        static let cellPosterImageRatio: CGFloat = 1 / 2
-        static let cellLeftPadding: CGFloat = 16
-        static let cellRightPadding: CGFloat = 16
-    }
-}
-
 protocol HomeViewModelDelegate: AnyObject {
     func showLoadingView()
     func hideLoadingView()
@@ -27,12 +17,10 @@ protocol HomeViewModelDelegate: AnyObject {
 protocol HomeViewModelProtocol {
     var delegate: HomeViewModelDelegate? { get set }
     var numberOfItems: Int { get }
-    var cellPadding: Double { get }
-    func load(pageNumber: Int)
-    //    func didSelect()
+    var gameNames: [String] { get }
+    func loadInitialGames(pageNumber: Int)
     func loadMoreGames()
     func game(index: IndexPath) -> GamesUIModel
-    func calculateCellHeight(collectionViewWidth: Double) -> Double
 }
 
 final class HomeViewModel: HomeViewModelProtocol {
@@ -42,7 +30,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     private var favouriteGameIDs = [Int]()
     private var currentPage: Int = 1
     private var isLoadingList: Bool = false
-    
+
     init(service: APIRequestProtocol) {
         self.service = service
     }
@@ -51,35 +39,31 @@ final class HomeViewModel: HomeViewModelProtocol {
         return games.count
     }
     
-    var cellPadding: Double {
-        return Double(Constants.cellLeftPadding + Constants.cellRightPadding)
+    var gameNames: [String] {
+        return games.compactMap { $0.name }
     }
     
-    func load(pageNumber: Int) {
+    func loadInitialGames(pageNumber: Int) {
+        currentPage = pageNumber
+        games.removeAll()
         fetchGames(with: pageNumber)
-        loadMoreGames()
     }
     
     func game(index: IndexPath) -> GamesUIModel {
-        guard index.item < games.count else {
-            return GamesUIModel(id: 0, rating: 0, released: "", metacritic: 0, name: "", backgroundImage: "", isFav: false)
-        }
-        let gameResult = games[index.item]
-        return GamesUIModel(
-            id: gameResult.id ?? 0,
-            rating: gameResult.rating,
-            released: gameResult.released,
-            metacritic: gameResult.metacritic,
-            name: gameResult.name,
-            backgroundImage: gameResult.backgroundImage,
-            isFav: false
-        )
-    }
-    
-    func calculateCellHeight(collectionViewWidth: Double) -> Double {
-        let posterImageHeight = (collectionViewWidth - cellPadding) * Double(Constants.cellPosterImageRatio)
-        return posterImageHeight + Double(Constants.cellTitleHeight)
-    }
+           guard index.item < games.count else {
+               return GamesUIModel(id: 0, rating: 0.0, released: "N/A", metacritic: 0, name: "N/A", backgroundImage: nil, isFav: false)
+           }
+           let gameResult = games[index.item]
+           return GamesUIModel(
+               id: gameResult.id ?? 0,
+               rating: gameResult.rating ?? 0.0,
+               released: gameResult.released ?? "N/A",
+               metacritic: gameResult.metacritic ?? 0,
+               name: gameResult.name ?? "N/A",
+               backgroundImage: gameResult.backgroundImage,
+               isFav: favouriteGameIDs.contains(gameResult.id ?? 0)
+           )
+       }
     
     private func fetchGames(with pageNumber: Int) {
         self.delegate?.showLoadingView()
@@ -88,6 +72,7 @@ final class HomeViewModel: HomeViewModelProtocol {
             
             DispatchQueue.main.async {
                 self.handleGameResponse(response)
+                self.isLoadingList = false
             }
         }
     }
@@ -97,18 +82,31 @@ final class HomeViewModel: HomeViewModelProtocol {
         switch response {
         case .success(let game):
             self.games.append(contentsOf: game.results ?? [])
+            self.logGameNames()
             self.delegate?.reloadData()
         case .failure(let error):
             self.delegate?.showError("Failed to load games: \(error.localizedDescription)")
         }
     }
     
-    func loadMoreGames() {
-        guard !isLoadingList && currentPage <= 500 else { return }
-        isLoadingList = true
-        currentPage += 1
-        fetchGames(with: currentPage)
+    private func logGameNames() {
+        let names = gameNames.joined(separator: ", ")
+        print("Fetched Games: \(names)")
     }
     
+    func loadMoreGames() {
+            guard !isLoadingList else {
+                print("Already loading more games, returning early.")
+                return
+            }
+            guard currentPage <= 500 else {
+                print("Reached the maximum page limit, no more games to load.")
+                return
+            }
+            
+            isLoadingList = true
+            currentPage += 1
+            print("Loading more games, currentPage: \(currentPage)")
+            fetchGames(with: currentPage)
+        }
 }
-

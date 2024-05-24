@@ -26,9 +26,7 @@ final class APIRequest: APIRequestProtocol {
         }
     }
     
-    private static func getRequestForGamesAndDetails<T: Decodable>(url: URL, jsonType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-        let shared = APIRequest()
-        
+    private static func getRequestForGamesAndDetails<T: Decodable>(url: URL, jsonType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {        
         print("API Request URL: \(url)")
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
