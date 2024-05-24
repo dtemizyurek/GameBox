@@ -10,6 +10,7 @@ import Foundation
 protocol APIRequestProtocol {
     func getGames(page: Int, completion: @escaping (Result<Game, Error>) -> Void)
     func getGamesDetails(id: String, completion: @escaping (Result<GameDetail, Error>) -> Void)
+    func getGameImage(path: String, completion: @escaping (Data?, Error?) -> Void)
 }
 
 final class APIRequest: APIRequestProtocol {
@@ -24,6 +25,17 @@ final class APIRequest: APIRequestProtocol {
         APIRequest.getRequestForGamesAndDetails(url: API.getGameDetails(id).url, jsonType: GameDetail.self) { result in
             completion(result)
         }
+    }
+    
+    func getGameImage(path: String, completion: @escaping (Data?, Error?) -> Void) {
+        guard let url = URL(string: path) else {
+            completion(nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            completion(data, error)
+        }.resume()
     }
     
     private static func getRequestForGamesAndDetails<T: Decodable>(url: URL, jsonType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {        

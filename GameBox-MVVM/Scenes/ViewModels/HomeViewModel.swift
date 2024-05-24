@@ -21,6 +21,8 @@ protocol HomeViewModelProtocol {
     func loadInitialGames(pageNumber: Int)
     func loadMoreGames()
     func game(index: IndexPath) -> GamesUIModel
+    func getGames() -> [GamesUIModel]
+
 }
 
 final class HomeViewModel: HomeViewModelProtocol {
@@ -30,6 +32,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     private var favouriteGameIDs = [Int]()
     private var currentPage: Int = 1
     private var isLoadingList: Bool = false
+    
 
     init(service: APIRequestProtocol) {
         self.service = service
@@ -53,6 +56,7 @@ final class HomeViewModel: HomeViewModelProtocol {
            guard index.item < games.count else {
                return GamesUIModel(id: 0, rating: 0.0, released: "N/A", metacritic: 0, name: "N/A", backgroundImage: nil, isFav: false)
            }
+        
            let gameResult = games[index.item]
            return GamesUIModel(
                id: gameResult.id ?? 0,
@@ -69,7 +73,6 @@ final class HomeViewModel: HomeViewModelProtocol {
         self.delegate?.showLoadingView()
         service.getGames(page: pageNumber) { [weak self] response in
             guard let self = self else { return }
-            
             DispatchQueue.main.async {
                 self.handleGameResponse(response)
                 self.isLoadingList = false
@@ -93,6 +96,20 @@ final class HomeViewModel: HomeViewModelProtocol {
         let names = gameNames.joined(separator: ", ")
         print("Fetched Games: \(names)")
     }
+    
+    func getGames() -> [GamesUIModel] {
+            return games.map { gameResult in
+                return GamesUIModel(
+                    id: gameResult.id ?? 0,
+                    rating: gameResult.rating ?? 0.0,
+                    released: gameResult.released ?? "N/A",
+                    metacritic: gameResult.metacritic ?? 0,
+                    name: gameResult.name ?? "N/A",
+                    backgroundImage: gameResult.backgroundImage,
+                    isFav: favouriteGameIDs.contains(gameResult.id ?? 0)
+                )
+            }
+        }
     
     func loadMoreGames() {
             guard !isLoadingList else {
