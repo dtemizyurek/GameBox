@@ -27,7 +27,9 @@ final class APIRequest: APIRequestProtocol {
     }
     
     private static func getRequestForGamesAndDetails<T: Decodable>(url: URL, jsonType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-        print("API Request URL: \(url)") 
+        let shared = APIRequest()
+        
+        print("API Request URL: \(url)")
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("API Request Error: \(error.localizedDescription)") // Log the error

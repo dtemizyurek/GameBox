@@ -15,29 +15,42 @@ final class HomeViewController: UIViewController  {
     
     var viewModel: HomeViewModelProtocol! {
         didSet {
-            viewModel.delegate = self
+            viewModel?.delegate = self
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let viewModel = viewModel else {
+            print("viewModel is not set")
+            return
+        }
         collectionView.dataSource = self
         collectionView.delegate = self
+
         collectionView.register(cellType: GamesCollectionViewCell.self)
         print(viewModel.numberOfItems)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.load()
+        guard let viewModel = viewModel else { return }
+        viewModel.load(pageNumber: 1)
+        viewModel.loadMoreGames()
     }
+
     
+    private func setupCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(cellType: GamesCollectionViewCell.self)
+    }
 }
 
 extension HomeViewController : ConfigureCollectionView {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.numberOfItems
+        return viewModel?.numberOfItems ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -50,6 +63,10 @@ extension HomeViewController : ConfigureCollectionView {
 }
 
 extension HomeViewController: HomeViewModelDelegate {
+    func showError(_ message: String) {
+        UIAlertController.alertMessage(title: "Error", message: "Error", vc: self)
+    }
+    
     func showLoadingView() {
         showLoading()
     }
