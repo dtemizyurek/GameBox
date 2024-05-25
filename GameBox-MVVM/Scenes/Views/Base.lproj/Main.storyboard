@@ -11,7 +11,7 @@
         <!--Games-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="GamePageViewController" id="BYZ-38-t0r" customClass="HomeViewController" customModule="GameBox_MVVM" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="GameBox_MVVM" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,23 +23,6 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="RQH-dj-BbG"/>
                                 </connections>
                             </searchBar>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsD-yS-GTO">
-                                <rect key="frame" x="8" y="175" width="377" height="200"/>
-                                <subviews>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="3Uv-wr-o1r">
-                                        <rect key="frame" x="8" y="166" width="361" height="26"/>
-                                        <color key="tintColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </pageControl>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="separatorColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="3Uv-wr-o1r" secondAttribute="bottom" constant="8" id="DFO-xs-iMb"/>
-                                    <constraint firstAttribute="trailing" secondItem="3Uv-wr-o1r" secondAttribute="trailing" constant="8" id="U9z-A3-CxM"/>
-                                    <constraint firstItem="3Uv-wr-o1r" firstAttribute="centerX" secondItem="bsD-yS-GTO" secondAttribute="centerX" id="YYE-PF-a7d"/>
-                                    <constraint firstAttribute="height" constant="200" id="gq1-gy-CiI"/>
-                                    <constraint firstItem="3Uv-wr-o1r" firstAttribute="leading" secondItem="bsD-yS-GTO" secondAttribute="leading" constant="8" id="nPC-lk-KN5"/>
-                                </constraints>
-                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="GamePageViewController" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fUg-PM-RsU">
                                 <rect key="frame" x="0.0" y="383" width="393" height="386"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -51,18 +34,27 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3RK-5I-bPb">
+                                <rect key="frame" x="8" y="175" width="377" height="192"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="192" id="yhA-NM-K8b"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="mz8-e7-Tzy" kind="embed" id="zSr-i1-6vQ"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bsD-yS-GTO" secondAttribute="trailing" constant="8" id="8KX-3j-iBo"/>
-                            <constraint firstItem="fUg-PM-RsU" firstAttribute="top" secondItem="bsD-yS-GTO" secondAttribute="bottom" constant="8" id="Lwn-zB-ZRL"/>
+                            <constraint firstItem="3RK-5I-bPb" firstAttribute="top" secondItem="p0J-xi-yg9" secondAttribute="bottom" constant="8" id="JJn-LS-b0o"/>
+                            <constraint firstItem="fUg-PM-RsU" firstAttribute="top" secondItem="3RK-5I-bPb" secondAttribute="bottom" constant="16" id="MqM-iQ-Ize"/>
                             <constraint firstItem="fUg-PM-RsU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="RG0-l3-JiS"/>
                             <constraint firstItem="p0J-xi-yg9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Wd2-Ft-m8D"/>
-                            <constraint firstItem="bsD-yS-GTO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="Zem-5S-JKf"/>
                             <constraint firstItem="fUg-PM-RsU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dXN-6b-bDv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="p0J-xi-yg9" secondAttribute="trailing" constant="8" id="dkR-XX-1EL"/>
-                            <constraint firstItem="bsD-yS-GTO" firstAttribute="top" secondItem="p0J-xi-yg9" secondAttribute="bottom" constant="8" id="gFO-pl-1TM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3RK-5I-bPb" secondAttribute="trailing" constant="8" id="eVa-nq-qy1"/>
+                            <constraint firstItem="3RK-5I-bPb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fBY-ja-5uX"/>
                             <constraint firstItem="p0J-xi-yg9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="qyU-qn-Dxi"/>
                             <constraint firstItem="fUg-PM-RsU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rC3-2Z-LEq"/>
                         </constraints>
@@ -71,13 +63,21 @@
                     <navigationItem key="navigationItem" title="Games" id="Wfe-9M-RZ3"/>
                     <connections>
                         <outlet property="collectionView" destination="fUg-PM-RsU" id="Dnd-N1-frp"/>
-                        <outlet property="scrollPageView" destination="bsD-yS-GTO" id="dLt-et-kiz"/>
+                        <outlet property="scrollPageView" destination="3RK-5I-bPb" id="Qd7-g2-9pn"/>
                         <outlet property="searchField" destination="p0J-xi-yg9" id="Bau-8D-dIp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1829.7709923664122" y="-326.05633802816902"/>
+        </scene>
+        <!--Game Page View Controller-->
+        <scene sceneID="jwC-Sj-qx2">
+            <objects>
+                <pageViewController storyboardIdentifier="GamePageViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="mz8-e7-Tzy" customClass="GamePageViewController" customModule="GameBox_MVVM" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fK1-LJ-YzR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2737" y="-326"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UZZ-pR-Xtr">
@@ -138,10 +138,7 @@
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="separatorColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

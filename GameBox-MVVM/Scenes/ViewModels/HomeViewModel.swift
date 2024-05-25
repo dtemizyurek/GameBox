@@ -12,6 +12,7 @@ protocol HomeViewModelDelegate: AnyObject {
     func hideLoadingView()
     func reloadData()
     func showError(_ message: String)
+    func navigateToGameDetails(with gameModel: GamesUIModel)
 }
 
 protocol HomeViewModelProtocol {
@@ -22,6 +23,7 @@ protocol HomeViewModelProtocol {
     func loadMoreGames()
     func game(index: IndexPath) -> GamesUIModel
     func getGames() -> [GamesUIModel]
+    func selectGame(at indexPath: IndexPath)
 
 }
 
@@ -119,5 +121,10 @@ final class HomeViewModel: HomeViewModelProtocol {
             currentPage += 1
             print("Loading more games, currentPage: \(currentPage)")
             fetchGames(with: currentPage)
+        }
+    
+    func selectGame(at indexPath: IndexPath) {
+            let selectedGame = game(index: indexPath)
+            delegate?.navigateToGameDetails(with: selectedGame)
         }
 }

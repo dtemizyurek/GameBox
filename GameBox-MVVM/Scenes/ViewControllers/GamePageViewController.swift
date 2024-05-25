@@ -18,7 +18,6 @@ class GamePageViewController: UIPageViewController {
         super.viewDidLoad()
         dataSource = self
         delegate = self
-        print(items.count)
         decoratePageControl()
         setupTimer()
     }
@@ -38,6 +37,7 @@ class GamePageViewController: UIPageViewController {
         goToNextPage()
     }
     
+    // Navigates to the next page in the page view controller
     func goToNextPage() {
         guard let currentViewController = self.viewControllers?.first else { return }
         guard let nextViewController = dataSource?.pageViewController(self, viewControllerAfter: currentViewController) else { return }
@@ -48,11 +48,11 @@ class GamePageViewController: UIPageViewController {
         self.gameSource = gameSource
         self.items.removeAll()
         for game in gameSource {
-            let c = UIViewController()
+            let vc = UIViewController()
             let gameView = GamePageView(frame: view.frame)
-            c.view.addSubview(gameView)
+            vc.view.addSubview(gameView)
             gameView.setImage(from: game.backgroundImage)
-            items.append(c)
+            items.append(vc)
         }
         
         if let firstViewController = items.first {
@@ -62,19 +62,6 @@ class GamePageViewController: UIPageViewController {
     
     private func setupTimer() {
         timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(changeImage), userInfo: nil, repeats: true)
-    }
-}
-
-class GamePageView: UIImageView {
-    func setImage(from urlString: String?) {
-        guard let urlString = urlString else { return }
-        let apiRequest = APIRequest()
-        apiRequest.getGameImage(path: urlString) { [weak self] data, error in
-            guard let self = self, let data = data, error == nil else { return }
-            DispatchQueue.main.async {
-                self.image = UIImage(data: data)
-            }
-        }
     }
 }
 
