@@ -31,7 +31,7 @@ final class DetailedGamesViewController: UIViewController {
         }
         
         private func updateFavoriteButton() {
-            let buttonTitle = (viewModel.gameModel.isFav ?? false) ? "Remove from Favorites" : "Add to Favorites"
+            let buttonTitle = (viewModel.gameModel.isFav ?? false) ? "" : ""
             addFavoriteButton.setTitle(buttonTitle, for: .normal)
             addFavoriteButton.setTitleColor((viewModel.gameModel.isFav ?? false) ? .systemOrange : .gray, for: .normal)
         }
@@ -41,13 +41,31 @@ final class DetailedGamesViewController: UIViewController {
         }
     }
 
-    extension DetailedGamesViewController: DetailedGamesViewModelDelegate {
+extension DetailedGamesViewController: DetailedGamesViewModelDelegate {
+    func showLoadingView() {
+        showLoading()
+    }
+    
+    func hideLoadingView() {
+        hideLoading()
+    }
+    
         func didFetchGameDetails(_ details: String) {
             DispatchQueue.main.async {
-                let detailComponents = details.split(separator: "\n", maxSplits: 2, omittingEmptySubsequences: true)
-                if detailComponents.count >= 3 {
-                    self.relaseDate.text = "Release Date: \(detailComponents[1])"
-                    self.metaCriticPointLabel.text = "Metacritic: \(detailComponents[2])"
+                let detailComponents = details.split(separator: "\n", maxSplits: 3, omittingEmptySubsequences: true)
+                if detailComponents.count > 1 {
+                    self.relaseDate.text = "\(detailComponents[1])"
+                } else {
+                    self.relaseDate.text = "Release Date: N/A"
+                }
+                
+                if detailComponents.count > 2 {
+                    self.metaCriticPointLabel.text = "\(detailComponents[2])"
+                } else {
+                    self.metaCriticPointLabel.text = "Rating: N/A"
+                }
+                
+                if detailComponents.count > 3 {
                     self.gameDescriptionLabel.text = String(detailComponents[3])
                 } else {
                     self.gameDescriptionLabel.text = details
@@ -79,3 +97,4 @@ final class DetailedGamesViewController: UIViewController {
             }
         }
     }
+extension DetailedGamesViewController: LoadingShowable {}

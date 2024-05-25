@@ -13,6 +13,8 @@ protocol DetailedGamesViewModelDelegate: AnyObject {
     func didFetchGameDetails(_ details: String)
     func didFetchGameImage(_ data: Data?)
     func didUpdateFavoriteStatus(isFav: Bool)
+    func showLoadingView()
+    func hideLoadingView()
     func showError(_ message: String)
 }
 
@@ -34,10 +36,11 @@ class DetailedGamesViewModel {
                 switch result {
                 case .success(let videoGameDetail):
                     let details = ("\(videoGameDetail.nameOriginal)\n\n" +
-                                   "Release Date: \(videoGameDetail.released)\n" +
-                                   "Metacritic Rate: \(videoGameDetail.metacritic)\n\n" +
+                                   " \(videoGameDetail.released)\n\n" +
+                                   " \(videoGameDetail.rating)\n\n" +
                                    "\(videoGameDetail.welcomeDescription)").replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
                     self?.delegate?.didFetchGameDetails(details)
+                    self?.delegate?.hideLoadingView()
                 case .failure(let error):
                     self?.delegate?.showError("Could not fetch the details: \(error.localizedDescription)")
                 }
@@ -45,7 +48,9 @@ class DetailedGamesViewModel {
         }
     }
 
+
     func fetchGameImage() {
+        self.delegate?.showLoadingView()
         guard let imagePath = gameModel.backgroundImage else {
             delegate?.showError("No image path available")
             return
