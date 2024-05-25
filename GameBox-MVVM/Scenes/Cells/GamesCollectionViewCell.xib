@@ -74,7 +74,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="xj0-Z5-6Xe" firstAttribute="top" secondItem="WaZ-4w-f5m" secondAttribute="top" constant="8" id="XLW-f0-v56"/>
                             <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="xj0-Z5-6Xe" secondAttribute="trailing" constant="8" id="d7e-kU-T4a"/>
@@ -101,8 +101,8 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <systemColor name="quaternaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.1764705882" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

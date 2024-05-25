@@ -5,6 +5,7 @@
 //  Created by Doğukan Temizyürek on 25.05.2024.
 //
 
+// CoreDataManager.swift
 import Foundation
 import CoreData
 
@@ -12,7 +13,7 @@ class CoreDataManager {
     static let shared = CoreDataManager()
 
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "GameBoxMVVM")
+        let container = NSPersistentContainer(name: "GameBox_MVVM")
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")

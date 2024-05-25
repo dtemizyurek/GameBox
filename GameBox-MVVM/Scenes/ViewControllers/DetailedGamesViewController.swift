@@ -38,6 +38,8 @@ final class DetailedGamesViewController: UIViewController {
         
         @IBAction func addFavoriteAction(_ sender: Any) {
             viewModel.toggleFavoriteStatus()
+            print("Favorite button clicked for game: \(viewModel.gameModel.name ?? "Unknown")")
+            
         }
     }
 

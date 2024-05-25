@@ -16,18 +16,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uygulamamıza hoş geldiniz ..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PTh-8Q-lG0">
-                                <rect key="frame" x="84.000000000000014" y="415.66666666666669" width="225.33333333333337" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gamebox_much_smaller" translatesAutoresizingMaskIntoConstraints="NO" id="9bc-9K-MTb">
+                                <rect key="frame" x="68.666666666666686" y="298" width="256.00000000000006" height="256"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="PTh-8Q-lG0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Gyh-vU-dch"/>
-                            <constraint firstItem="PTh-8Q-lG0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="XaU-aF-b8J"/>
+                            <constraint firstItem="9bc-9K-MTb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="9l7-9N-c2C"/>
+                            <constraint firstItem="9bc-9K-MTb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="I5h-GX-pvc"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -37,6 +34,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Gamebox_much_smaller" width="256" height="256"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

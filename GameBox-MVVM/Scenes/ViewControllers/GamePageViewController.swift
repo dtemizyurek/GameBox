@@ -8,7 +8,7 @@
 // GamePageViewController.swift
 import UIKit
 
-class GamePageViewController: UIPageViewController {
+final class GamePageViewController: UIPageViewController {
     fileprivate var items: [UIViewController] = []
     private var gameSource: [GamesUIModel]?
     private var currentIndex: Int?

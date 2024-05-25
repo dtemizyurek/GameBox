@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "Gamebox_updated.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

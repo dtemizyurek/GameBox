@@ -55,57 +55,75 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
     
     func game(index: IndexPath) -> GamesUIModel {
-           guard index.item < games.count else {
-               return GamesUIModel(id: 0, rating: 0.0, released: "N/A", metacritic: 0, name: "N/A", backgroundImage: nil, isFav: false)
-           }
+        guard index.item < games.count else {
+            return GamesUIModel(id: 0, rating: 0.0, released: "N/A", metacritic: 0, name: "N/A", backgroundImage: nil, isFav: false)
+        }
+
+        let gameResult = games[index.item]
+        let ratingString = String(format: "%.1f", gameResult.rating ?? 0.0)
+        let roundedRating = Double(ratingString) ?? 0.0
         
-           let gameResult = games[index.item]
-           return GamesUIModel(
-               id: gameResult.id ?? 0,
-               rating: gameResult.rating ?? 0.0,
-               released: gameResult.released ?? "N/A",
-               metacritic: gameResult.metacritic ?? 0,
-               name: gameResult.name ?? "N/A",
-               backgroundImage: gameResult.backgroundImage,
-               isFav: favouriteGameIDs.contains(gameResult.id ?? 0)
-           )
-       }
+        var releaseYear = "N/A"
+        if let releaseDateString = gameResult.released, let releaseDate = DateFormatter.gameDateFormatter.date(from: releaseDateString) {
+            releaseYear = DateFormatter.yearFormatter.string(from: releaseDate)
+        }
+
+        return GamesUIModel(
+            id: gameResult.id ?? 0,
+            rating: roundedRating,
+            released: releaseYear,
+            metacritic: gameResult.metacritic ?? 0,
+            name: gameResult.name ?? "N/A",
+            backgroundImage: gameResult.backgroundImage,
+            isFav: favouriteGameIDs.contains(gameResult.id ?? 0)
+        )
+    }
+
     
     private func fetchGames(with pageNumber: Int) {
-        self.delegate?.showLoadingView()
+        guard !isLoadingList else { return }
+        isLoadingList = true
+        delegate?.showLoadingView()
+        
         service.getGames(page: pageNumber) { [weak self] response in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.handleGameResponse(response)
                 self.isLoadingList = false
+                self.handleGameResponse(response)
             }
         }
     }
 
     private func handleGameResponse(_ response: Result<Game, Error>) {
-        self.delegate?.hideLoadingView()
+        delegate?.hideLoadingView()
+        
         switch response {
         case .success(let game):
-            self.games.append(contentsOf: game.results ?? [])
-            self.delegate?.reloadData()
+            games.append(contentsOf: game.results ?? [])
+            delegate?.reloadData()
         case .failure(let error):
-            self.delegate?.showError("Failed to load games: \(error.localizedDescription)")
+            delegate?.showError("Failed to load games: \(error.localizedDescription)")
         }
     }
+
     
     func getGames() -> [GamesUIModel] {
-            return games.map { gameResult in
-                return GamesUIModel(
-                    id: gameResult.id ?? 0,
-                    rating: gameResult.rating ?? 0.0,
-                    released: gameResult.released ?? "N/A",
-                    metacritic: gameResult.metacritic ?? 0,
-                    name: gameResult.name ?? "N/A",
-                    backgroundImage: gameResult.backgroundImage,
-                    isFav: favouriteGameIDs.contains(gameResult.id ?? 0)
-                )
-            }
+        return games.map { gameResult in
+            let ratingString = String(format: "%.1f", gameResult.rating ?? 0.0)
+            let roundedRating = Double(ratingString) ?? 0.0
+            
+            return GamesUIModel(
+                id: gameResult.id ?? 0,
+                rating: roundedRating,
+                released: gameResult.released ?? "N/A",
+                metacritic: gameResult.metacritic ?? 0,
+                name: gameResult.name ?? "N/A",
+                backgroundImage: gameResult.backgroundImage,
+                isFav: favouriteGameIDs.contains(gameResult.id ?? 0)
+            )
         }
+    }
+
     
     func loadMoreGames() {
             guard !isLoadingList else {
