@@ -19,6 +19,10 @@ final class GamePageViewController: UIPageViewController {
         dataSource = self
         delegate = self
         decoratePageControl()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupTimer()
     }
     

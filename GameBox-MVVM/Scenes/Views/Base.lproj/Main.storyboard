@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--GameBox-->
+        <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="GameBox_MVVM" customModuleProvider="target" sceneMemberID="viewController">
@@ -60,7 +60,14 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="sDe-KO-n4C"/>
-                    <navigationItem key="navigationItem" title="GameBox" prompt="Title" id="Wfe-9M-RZ3"/>
+                    <navigationItem key="navigationItem" prompt="Title" id="Wfe-9M-RZ3">
+                        <nil key="title"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="8Ml-ej-eci">
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        </button>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="fUg-PM-RsU" id="Dnd-N1-frp"/>
                         <outlet property="scrollPageView" destination="3RK-5I-bPb" id="Qd7-g2-9pn"/>
@@ -159,7 +166,7 @@
                     <tabBarItem key="tabBarItem" title="Favorites" image="heart" catalog="system" id="15U-I5-Q1v"/>
                     <connections>
                         <outlet property="collectionView" destination="aMK-lo-JFb" id="kuM-LF-5Ta"/>
-                        <outlet property="textField" destination="rOn-fl-bSb" id="g1h-oC-wil"/>
+                        <outlet property="searchBar" destination="rOn-fl-bSb" id="g1h-oC-wil"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfz-cB-8bf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -171,7 +178,7 @@
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

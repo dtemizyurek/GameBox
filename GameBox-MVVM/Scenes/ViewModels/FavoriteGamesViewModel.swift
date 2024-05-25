@@ -69,8 +69,11 @@ final class FavoriteGamesViewModel {
             isFiltering = true
             filteredVideoGames = dataSource.filter { $0.name?.lowercased().contains(searchText.lowercased()) ?? false }
         }
-        delegate?.reloadData()
+        DispatchQueue.main.async {
+            self.delegate?.reloadData()
+        }
     }
+    
     
     var numberOfItems: Int {
         return isFiltering ? filteredVideoGames.count : dataSource.count

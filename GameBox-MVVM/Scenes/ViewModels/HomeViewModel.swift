@@ -81,31 +81,26 @@ final class HomeViewModel: HomeViewModelProtocol {
 
     
     private func fetchGames(with pageNumber: Int) {
-        guard !isLoadingList else { return }
-        isLoadingList = true
-        delegate?.showLoadingView()
-        
+        self.delegate?.showLoadingView()
         service.getGames(page: pageNumber) { [weak self] response in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.isLoadingList = false
                 self.handleGameResponse(response)
+                self.isLoadingList = false
             }
         }
     }
 
     private func handleGameResponse(_ response: Result<Game, Error>) {
-        delegate?.hideLoadingView()
-        
+        self.delegate?.hideLoadingView()
         switch response {
         case .success(let game):
-            games.append(contentsOf: game.results ?? [])
-            delegate?.reloadData()
+            self.games.append(contentsOf: game.results ?? [])
+            self.delegate?.reloadData()
         case .failure(let error):
-            delegate?.showError("Failed to load games: \(error.localizedDescription)")
+            self.delegate?.showError("Failed to load games: \(error.localizedDescription)")
         }
     }
-
     
     func getGames() -> [GamesUIModel] {
         return games.map { gameResult in

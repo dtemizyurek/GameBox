@@ -68,6 +68,7 @@ final class HomeViewController: UIViewController  {
         let games = viewModel.getGames()
         gamePageViewController?.populateItems(gameSource: games)
     }
+    
 }
 
 // MARK: - UICollectionViewDataSource
