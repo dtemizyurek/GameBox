@@ -41,7 +41,6 @@ final class GamePageViewController: UIPageViewController {
         goToNextPage()
     }
     
-    // Navigates to the next page in the page view controller
     func goToNextPage() {
         guard let currentViewController = self.viewControllers?.first else { return }
         guard let nextViewController = dataSource?.pageViewController(self, viewControllerAfter: currentViewController) else { return }

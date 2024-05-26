@@ -8,15 +8,15 @@
 import UIKit
 
 final class FavoriteGamesViewController: UIViewController {
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var viewModel: FavoriteGamesViewModel? {
-        didSet {
-            viewModel?.delegate = self
+            didSet {
+                viewModel?.delegate = self
+            }
         }
-    }
         
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -44,6 +44,22 @@ final class FavoriteGamesViewController: UIViewController {
 
     // MARK: - FavoriteGamesViewModelDelegate
     extension FavoriteGamesViewController: FavoriteGamesViewModelDelegate {
+        
+        func navigateToGameDetails(with gameModel: GamesUIModel) {
+            let detailedViewModel = DetailedGamesViewModel(gameModel: gameModel)
+            let detailedVC = DetailedGamesViewController()
+            detailedVC.viewModel = detailedViewModel
+            navigationController?.pushViewController(detailedVC, animated: true)
+        }
+        
+        func showLoadingView() {
+            showLoading()
+        }
+        
+        func hideLoadingView() {
+            hideLoading()
+        }
+        
         func reloadData() {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -70,14 +86,22 @@ final class FavoriteGamesViewController: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GamesCollectionViewCell", for: indexPath) as? GamesCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            guard let game = viewModel?.game(at: indexPath) else { return .init() }
+            guard let game = viewModel?.game(at: indexPath) else { return UICollectionViewCell() }
             cell.configureDetail(games: game)
             return cell
         }
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             let width = self.view.frame.size.width
-            return CGSize(width: width / 2, height: 250)
+            return CGSize(width: width, height: 130)
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            viewModel?.selectGame(at: indexPath)
         }
     }
 
@@ -92,3 +116,5 @@ final class FavoriteGamesViewController: UIViewController {
             viewModel?.filterGames(with: "")
         }
     }
+
+    extension FavoriteGamesViewController: LoadingShowable {}

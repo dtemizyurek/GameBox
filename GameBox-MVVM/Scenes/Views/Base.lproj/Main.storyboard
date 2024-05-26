@@ -18,6 +18,7 @@
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p0J-xi-yg9">
                                 <rect key="frame" x="8" y="111" width="377" height="56"/>
+                                <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="RQH-dj-BbG"/>
@@ -59,10 +60,11 @@
                             <constraint firstItem="fUg-PM-RsU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rC3-2Z-LEq"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="sDe-KO-n4C"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" selectedImage="house.fill" id="sDe-KO-n4C"/>
                     <navigationItem key="navigationItem" prompt="Title" id="Wfe-9M-RZ3">
                         <nil key="title"/>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="8Ml-ej-eci">
+                            <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" title="Button"/>
@@ -114,6 +116,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" systemColor="systemOrangeColor"/>
+                        <color key="barTintColor" systemColor="systemOrangeColor"/>
+                        <color key="selectedImageTintColor" systemColor="systemOrangeColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="7SH-F1-JEL"/>
@@ -140,8 +145,8 @@
                                 </connections>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aMK-lo-JFb">
-                                <rect key="frame" x="0.0" y="159" width="393" height="610"/>
-                                <color key="backgroundColor" red="0.81568627449999997" green="0.56470588239999997" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="8" y="167" width="377" height="610"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gFE-dC-MFZ">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -154,16 +159,16 @@
                         <viewLayoutGuide key="safeArea" id="vyI-fI-lXB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="aMK-lo-JFb" firstAttribute="trailing" secondItem="vyI-fI-lXB" secondAttribute="trailing" id="AzD-jJ-WHw"/>
-                            <constraint firstItem="vyI-fI-lXB" firstAttribute="bottom" secondItem="aMK-lo-JFb" secondAttribute="bottom" id="KDt-Q8-Dyl"/>
+                            <constraint firstItem="aMK-lo-JFb" firstAttribute="leading" secondItem="vyI-fI-lXB" secondAttribute="leading" constant="8" id="CB2-r4-I18"/>
+                            <constraint firstItem="vyI-fI-lXB" firstAttribute="trailing" secondItem="aMK-lo-JFb" secondAttribute="trailing" constant="8" id="TG0-Ev-j4Z"/>
+                            <constraint firstItem="aMK-lo-JFb" firstAttribute="bottom" secondItem="vyI-fI-lXB" secondAttribute="bottom" constant="8" id="Ufu-jW-3GQ"/>
+                            <constraint firstItem="aMK-lo-JFb" firstAttribute="top" secondItem="rOn-fl-bSb" secondAttribute="bottom" constant="8" id="e2J-CI-vYy"/>
                             <constraint firstItem="rOn-fl-bSb" firstAttribute="leading" secondItem="vyI-fI-lXB" secondAttribute="leading" id="eaD-U7-AHS"/>
-                            <constraint firstItem="aMK-lo-JFb" firstAttribute="leading" secondItem="vyI-fI-lXB" secondAttribute="leading" id="fG7-uB-0A9"/>
-                            <constraint firstItem="aMK-lo-JFb" firstAttribute="top" secondItem="rOn-fl-bSb" secondAttribute="bottom" id="j6o-ga-Bim"/>
                             <constraint firstItem="rOn-fl-bSb" firstAttribute="top" secondItem="vyI-fI-lXB" secondAttribute="top" id="pbe-4q-6MU"/>
                             <constraint firstItem="rOn-fl-bSb" firstAttribute="trailing" secondItem="vyI-fI-lXB" secondAttribute="trailing" id="uPj-OX-9R2"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Favorites" image="heart" catalog="system" id="15U-I5-Q1v"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="heart" catalog="system" selectedImage="heart.fill" id="15U-I5-Q1v"/>
                     <connections>
                         <outlet property="collectionView" destination="aMK-lo-JFb" id="kuM-LF-5Ta"/>
                         <outlet property="searchBar" destination="rOn-fl-bSb" id="g1h-oC-wil"/>
@@ -176,12 +181,17 @@
     </scenes>
     <resources>
         <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="heart.fill" catalog="system" width="128" height="107"/>
         <image name="house" catalog="system" width="128" height="104"/>
+        <image name="house.fill" catalog="system" width="128" height="104"/>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

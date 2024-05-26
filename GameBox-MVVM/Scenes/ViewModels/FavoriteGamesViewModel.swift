@@ -9,10 +9,23 @@ import CoreData
 
 protocol FavoriteGamesViewModelDelegate: AnyObject {
     func reloadData()
+    func showLoadingView()
+    func hideLoadingView()
     func showError(_ message: String)
+    func navigateToGameDetails(with gameModel: GamesUIModel)
 }
 
-final class FavoriteGamesViewModel {
+protocol FavoriteGameViewModelProtocol {
+    var delegate: FavoriteGamesViewModelDelegate? { get set }
+    func selectGame(at indexPath: IndexPath)
+    func loadFavoriteGames()
+    func updateFavGames(games: [GameDetail])
+    func filterGames(with searchText: String)
+    var numberOfItems: Int { get }
+    func game(at indexPath: IndexPath) -> GameDetail
+}
+
+final class FavoriteGamesViewModel: FavoriteGameViewModelProtocol {
     weak var delegate: FavoriteGamesViewModelDelegate?
     private(set) var filteredVideoGames = [GameDetail]()
     private(set) var isFiltering: Bool = false
@@ -21,12 +34,12 @@ final class FavoriteGamesViewModel {
     private var favouriteGameIDS = [Int]()
     private let apiRequest: APIRequestProtocol
     private let coreDataManager: CoreDataManager
-
-    init(coreDataManager: CoreDataManager = CoreDataManager.shared,apiRequest: APIRequestProtocol = APIRequest()) {
+    
+    init(coreDataManager: CoreDataManager = CoreDataManager.shared, apiRequest: APIRequestProtocol = APIRequest()) {
         self.coreDataManager = coreDataManager
         self.apiRequest = apiRequest
     }
-
+    
     func loadFavoriteGames() {
         favouriteGameIDS.removeAll()
         let context = coreDataManager.context
@@ -51,34 +64,34 @@ final class FavoriteGamesViewModel {
         }
     }
     
-    
-    
     private func checkFavoriteUpdates() {
+        delegate?.showLoadingView()
         self.gamesSource.removeAll()
         self.filteredVideoGames.removeAll()
         self.dataSource.removeAll()
-        let queue = DispatchQueue(label: "checkFavoriteUpdates", qos: .background,attributes: .concurrent )
+        
         let group = DispatchGroup()
-        favouriteGameIDS.forEach { id in
+        
+        for id in favouriteGameIDS {
             group.enter()
-            queue.async {
-                self.apiRequest.getGamesDetails(id: "\(id)") { result in
+            apiRequest.getGamesDetails(id: "\(id)") { result in
+                DispatchQueue.main.async {
                     switch result {
                     case .success(let success):
                         self.gamesSource.append(success)
-                        group.leave()
-                    case .failure(let failure):
-                        group.leave()
+                    case .failure(let error):
+                        print("Error fetching game details for id \(id): \(error)")
                     }
+                    group.leave()
                 }
             }
         }
-        group.notify(queue: queue) {
+        
+        group.notify(queue: DispatchQueue.main) {
+            self.delegate?.hideLoadingView()
             guard !self.gamesSource.isEmpty else { return }
-            //dataSource = gamesSource.filter { favouriteGameIDS.contains($0.id) }
-            DispatchQueue.main.async {
-                self.delegate?.reloadData()
-            }
+            self.dataSource = self.gamesSource
+            self.delegate?.reloadData()
         }
     }
     
@@ -86,7 +99,7 @@ final class FavoriteGamesViewModel {
         gamesSource = games
         checkFavoriteUpdates()
     }
-
+    
     func filterGames(with searchText: String) {
         if searchText.isEmpty || searchText.count <= 3 {
             isFiltering = false
@@ -99,12 +112,25 @@ final class FavoriteGamesViewModel {
         }
     }
     
-    
     var numberOfItems: Int {
         return isFiltering ? filteredVideoGames.count : gamesSource.count
     }
     
     func game(at indexPath: IndexPath) -> GameDetail {
         return isFiltering ? filteredVideoGames[indexPath.item] : gamesSource[indexPath.item]
+    }
+    
+    func selectGame(at indexPath: IndexPath) {
+        let selectedGame = game(at: indexPath)
+        let uiModel = GamesUIModel(
+            id: selectedGame.id,
+            rating: selectedGame.rating,
+            released: selectedGame.released,
+            metacritic: selectedGame.metacritic,
+            name: selectedGame.name,
+            backgroundImage: selectedGame.backgroundImage,
+            isFav: true // Assume that all games here are favorite
+        )
+        delegate?.navigateToGameDetails(with: uiModel)
     }
 }
