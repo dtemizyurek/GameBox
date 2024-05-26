@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		45016DA32C01180100EDC5EE /* GamePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45016DA22C01180100EDC5EE /* GamePageViewController.swift */; };
 		45037DEB2C00E5A60061F2F7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45037DEA2C00E5A60061F2F7 /* Lottie */; };
-		45037DED2C00E6E90061F2F7 /* mario.json in Resources */ = {isa = PBXBuildFile; fileRef = 45037DEC2C00E6E90061F2F7 /* mario.json */; };
 		45037DEF2C00E7530061F2F7 /* pacman.json in Resources */ = {isa = PBXBuildFile; fileRef = 45037DEE2C00E7530061F2F7 /* pacman.json */; };
 		4515D0B42C02313100150AAF /* DetailedGamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515D0B32C02313000150AAF /* DetailedGamesViewModel.swift */; };
 		4515D0B62C0232F500150AAF /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515D0B52C0232F500150AAF /* CoreDataManager.swift */; };
@@ -47,7 +46,6 @@
 
 /* Begin PBXFileReference section */
 		45016DA22C01180100EDC5EE /* GamePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePageViewController.swift; sourceTree = "<group>"; };
-		45037DEC2C00E6E90061F2F7 /* mario.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mario.json; sourceTree = "<group>"; };
 		45037DEE2C00E7530061F2F7 /* pacman.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pacman.json; sourceTree = "<group>"; };
 		4515D0B32C02313000150AAF /* DetailedGamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGamesViewModel.swift; sourceTree = "<group>"; };
 		4515D0B52C0232F500150AAF /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -109,6 +107,133 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		4571DF952C0365790049ED94 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				4571DF982C0365950049ED94 /* ViewController */,
+				4571DF972C03658D0049ED94 /* ViewModel */,
+				4571DF962C0365860049ED94 /* Model */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		4571DF962C0365860049ED94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				45340F992BFF7F0A002D3A6B /* GamesUIModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4571DF972C03658D0049ED94 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				45340F972BFF7491002D3A6B /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4571DF982C0365950049ED94 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45EF7C9A2BF7E8540058F562 /* HomeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4571DF992C0365C00049ED94 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				4571DF9C2C0365DA0049ED94 /* ViewController */,
+				4571DF9B2C0365CF0049ED94 /* ViewModel */,
+				4571DF9A2C0365C70049ED94 /* Model */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		4571DF9A2C0365C70049ED94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				45D0F65B2BFD00B5006F2729 /* GameDetails.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4571DF9B2C0365CF0049ED94 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4515D0B32C02313000150AAF /* DetailedGamesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4571DF9C2C0365DA0049ED94 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45198EB22C0228A7008BE6D6 /* DetailedGamesViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4571DF9D2C0366090049ED94 /* GamePage */ = {
+			isa = PBXGroup;
+			children = (
+				4571DFA02C0366250049ED94 /* ViewController */,
+				4571DF9F2C03661D0049ED94 /* ViewModel */,
+				4571DF9E2C0366160049ED94 /* Model */,
+			);
+			path = GamePage;
+			sourceTree = "<group>";
+		};
+		4571DF9E2C0366160049ED94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				45D0F6572BFCFF1C006F2729 /* Game.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4571DF9F2C03661D0049ED94 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				453499FC2C01ECDA00772744 /* GamePageViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4571DFA02C0366250049ED94 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				45016DA22C01180100EDC5EE /* GamePageViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4571DFA12C03664A0049ED94 /* FavoriteGames */ = {
+			isa = PBXGroup;
+			children = (
+				4571DFA32C03665C0049ED94 /* ViewModel */,
+				4571DFA22C0366530049ED94 /* ViewController */,
+			);
+			path = FavoriteGames;
+			sourceTree = "<group>";
+		};
+		4571DFA22C0366530049ED94 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				459F5AED2C0288DF00849628 /* FavoriteGamesViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4571DFA32C03665C0049ED94 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				459F5AEB2C02886700849628 /* FavoriteGamesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		45EF7C8A2BF7E8540058F562 = {
 			isa = PBXGroup;
 			children = (
@@ -135,7 +260,6 @@
 				45EF7CB42BFB7D840058F562 /* Network */,
 				45EF7CA72BF7E8550058F562 /* Info.plist */,
 				45EF7CA22BF7E8550058F562 /* Assets.xcassets */,
-				45037DEC2C00E6E90061F2F7 /* mario.json */,
 				45037DEE2C00E7530061F2F7 /* pacman.json */,
 				45EF7C9F2BF7E8540058F562 /* GameBox_MVVM.xcdatamodeld */,
 			);
@@ -167,34 +291,14 @@
 		45EF7CAF2BFB7D240058F562 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				4571DFA12C03664A0049ED94 /* FavoriteGames */,
+				4571DF952C0365790049ED94 /* Home */,
+				4571DF9D2C0366090049ED94 /* GamePage */,
+				4571DF992C0365C00049ED94 /* Detail */,
 				45EF7CAE2BFB7D1B0058F562 /* Cells */,
-				45EF7CB12BFB7D390058F562 /* Models */,
 				45EF7CB82BFB7F390058F562 /* Views */,
-				45EF7CB72BFB7EB60058F562 /* ViewControllers */,
-				45EF7CB02BFB7D2E0058F562 /* ViewModels */,
 			);
 			path = Scenes;
-			sourceTree = "<group>";
-		};
-		45EF7CB02BFB7D2E0058F562 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				45340F972BFF7491002D3A6B /* HomeViewModel.swift */,
-				453499FC2C01ECDA00772744 /* GamePageViewModel.swift */,
-				4515D0B32C02313000150AAF /* DetailedGamesViewModel.swift */,
-				459F5AEB2C02886700849628 /* FavoriteGamesViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		45EF7CB12BFB7D390058F562 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45D0F6572BFCFF1C006F2729 /* Game.swift */,
-				45D0F65B2BFD00B5006F2729 /* GameDetails.swift */,
-				45340F992BFF7F0A002D3A6B /* GamesUIModel.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		45EF7CB42BFB7D840058F562 /* Network */ = {
@@ -213,17 +317,6 @@
 				45EF7C982BF7E8540058F562 /* SceneDelegate.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		45EF7CB72BFB7EB60058F562 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				45EF7C9A2BF7E8540058F562 /* HomeViewController.swift */,
-				45016DA22C01180100EDC5EE /* GamePageViewController.swift */,
-				45198EB22C0228A7008BE6D6 /* DetailedGamesViewController.swift */,
-				459F5AED2C0288DF00849628 /* FavoriteGamesViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		45EF7CB82BFB7F390058F562 /* Views */ = {
@@ -303,7 +396,6 @@
 				45340FA92C0004CD002D3A6B /* GamesCollectionViewCell.xib in Resources */,
 				45037DEF2C00E7530061F2F7 /* pacman.json in Resources */,
 				45198EB52C0228A7008BE6D6 /* DetailedGamesViewController.xib in Resources */,
-				45037DED2C00E6E90061F2F7 /* mario.json in Resources */,
 				45EF7CA32BF7E8550058F562 /* Assets.xcassets in Resources */,
 				45EF7CA62BF7E8550058F562 /* Base in Resources */,
 				45EF7C9E2BF7E8540058F562 /* Base in Resources */,

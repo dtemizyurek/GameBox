@@ -23,7 +23,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYA-tb-wdY">
                                 <rect key="frame" x="115.99999999999999" y="7.9999999999999982" width="44.333333333333329" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eJC-TP-00n">
@@ -39,7 +39,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="TAm-MK-rZz" secondAttribute="bottom" id="2q0-vQ-hq6"/>
                                     <constraint firstItem="TAm-MK-rZz" firstAttribute="top" secondItem="1kp-bh-thk" secondAttribute="top" id="55p-cj-Hhx"/>
@@ -83,10 +83,12 @@
             </constraints>
             <size key="customSize" width="328" height="145"/>
             <connections>
+                <outlet property="backGroundView" destination="WaZ-4w-f5m" id="vfO-sH-uM7"/>
                 <outlet property="gameImage" destination="eJC-TP-00n" id="0Dm-2d-wv8"/>
                 <outlet property="gameLabel" destination="AYA-tb-wdY" id="VZ0-4y-Nad"/>
                 <outlet property="gameRatingLabel" destination="TAm-MK-rZz" id="ure-yT-GNW"/>
                 <outlet property="gameReleasedDate" destination="vUS-dq-OR0" id="HbT-Ia-q0Y"/>
+                <outlet property="ratingView" destination="TAm-MK-rZz" id="im9-3E-MRt"/>
             </connections>
             <point key="canvasLocation" x="343.51145038167937" y="21.47887323943662"/>
         </collectionViewCell>
@@ -96,7 +98,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

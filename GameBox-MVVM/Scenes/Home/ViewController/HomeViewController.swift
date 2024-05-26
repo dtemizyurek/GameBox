@@ -78,7 +78,13 @@ final class HomeViewController: UIViewController  {
     // MARK: - UICollectionViewDataSource
     extension HomeViewController: ConfigureCollectionView {
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return viewModel?.numberOfItems ?? 0
+            let count = viewModel?.numberOfItems ?? 0
+            if count == 0 {
+                collectionView.setEmptyView(title: "No Games", message: "No games available. Please try again later.", image: UIImage(named: "Gamebox_much_smaller"))
+            } else {
+                collectionView.restore()
+            }
+            return count
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -125,6 +131,12 @@ final class HomeViewController: UIViewController  {
             collectionView.reloadData()
             let games = viewModel?.getGames() ?? []
             gamePageViewController?.populateItems(gameSource: games)
+            
+            if games.isEmpty {
+                collectionView.setEmptyView(title: "No Games", message: "No games available. Please try again later.", image: UIImage(named: "emptyPlaceholder"))
+            } else {
+                collectionView.restore()
+            }
         }
         
         func showError(_ message: String) {
@@ -158,3 +170,4 @@ final class HomeViewController: UIViewController  {
     }
 
     extension HomeViewController: LoadingShowable {}
+

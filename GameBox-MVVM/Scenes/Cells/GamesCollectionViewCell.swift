@@ -8,12 +8,13 @@
 import UIKit
 import Lottie
 
-class GamesCollectionViewCell: UICollectionViewCell {
-    
+final class GamesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var gameImage: UIImageView!
     @IBOutlet weak var gameLabel: UILabel!
     @IBOutlet weak var gameReleasedDate: UILabel!
     @IBOutlet weak var gameRatingLabel: UILabel!
+    @IBOutlet weak var backGroundView: UIView!
+    @IBOutlet weak var ratingView: UILabel!
     
     private var imageURL: URL?
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
@@ -21,14 +22,24 @@ class GamesCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupActivityIndicator()
+        setupRatingView()
+        setupBackgroundView()
+        setupImageView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        makeRatingViewCircular()
     }
     
     func configureDetail(games: GameDetail) {
         gameLabel.text = games.name
         gameRatingLabel.text = "\(games.rating)"
         gameReleasedDate.text = games.released
-        let imageUrlString = games.backgroundImage
+        setRatingColor(rating: games.rating)
+        ratingView.alpha = 1.0
         
+        let imageUrlString = games.backgroundImage
         if let url = URL(string: imageUrlString) {
             imageURL = url
             gameImage.image = UIImage(named: "placeholder")
@@ -39,13 +50,15 @@ class GamesCollectionViewCell: UICollectionViewCell {
             stopLoading()
         }
     }
+    
     func configureHome(games: GamesUIModel) {
         gameLabel.text = games.name
         gameRatingLabel.text = "\(games.rating ?? 0)"
         gameReleasedDate.text = games.released
-       
+        setRatingColor(rating: games.rating ?? 0)
+        ratingView.alpha = 1.0
         
-        if  let imageUrlString = games.backgroundImage, let url = URL(string: imageUrlString) {
+        if let imageUrlString = games.backgroundImage, let url = URL(string: imageUrlString) {
             imageURL = url
             gameImage.image = UIImage(named: "placeholder")
             startLoading()
@@ -54,6 +67,66 @@ class GamesCollectionViewCell: UICollectionViewCell {
             gameImage.image = UIImage(named: "placeholder")
             stopLoading()
         }
+    }
+    
+    private func setupBackgroundView() {
+        backGroundView.layer.cornerRadius = 10
+        backGroundView.layer.masksToBounds = true
+    }
+    
+    private func setupImageView() {
+        gameImage.layer.cornerRadius = 10
+        gameImage.layer.masksToBounds = true
+    }
+    
+    private func setupRatingView() {
+        ratingView.layer.borderWidth = 0.0
+        ratingView.layer.masksToBounds = true
+    }
+    
+    private func makeRatingViewCircular() {
+        ratingView.layer.cornerRadius = ratingView.frame.size.width / 2
+        ratingView.layer.masksToBounds = true
+    }
+    
+    private func setRatingColor(rating: Double) {
+        var color: UIColor
+        
+        switch rating {
+        case 4...:
+            color = .systemGreen
+        case 3..<4:
+            color = .systemYellow
+        case 2..<3:
+            color = .systemOrange
+        case 1..<2:
+            color = .systemRed
+        default:
+            color = .systemGray
+        }
+        
+        animateBorderColor(to: color.cgColor)
+        ratingView.backgroundColor = color.withAlphaComponent(0.6)
+    }
+    
+    private func animateBorderColor(to color: CGColor) {
+        let borderAnimation = CABasicAnimation(keyPath: "borderColor")
+        borderAnimation.fromValue = UIColor.clear.cgColor
+        borderAnimation.toValue = color
+        borderAnimation.duration = 4.0 // Animasyon süresi 4 saniye
+        
+        let borderWidthAnimation = CABasicAnimation(keyPath: "borderWidth")
+        borderWidthAnimation.fromValue = 0.0
+        borderWidthAnimation.toValue = 2.0
+        borderWidthAnimation.duration = 4.0 // Animasyon süresi 4 saniye
+        
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations = [borderAnimation, borderWidthAnimation]
+        animationGroup.duration = 4.0 // Animasyon süresi 4 saniye
+        
+        ratingView.layer.add(animationGroup, forKey: "borderColorAndWidth")
+        ratingView.layer.borderColor = color
+        ratingView.layer.borderWidth = 2.0
     }
     
     private func setupActivityIndicator() {
