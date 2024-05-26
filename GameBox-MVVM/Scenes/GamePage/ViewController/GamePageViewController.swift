@@ -9,11 +9,12 @@
 import UIKit
 
 final class GamePageViewController: UIPageViewController {
+    //MARK: - Private Variables
     fileprivate var items: [UIViewController] = []
     private var gameSource: [GamesUIModel]?
     private var currentIndex: Int?
     private var timer: Timer?
-    
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
@@ -31,6 +32,7 @@ final class GamePageViewController: UIPageViewController {
         timer?.invalidate()
     }
     
+    //MARK: -  functions
     fileprivate func decoratePageControl() {
         let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [GamePageViewController.self])
         pageControl.currentPageIndicatorTintColor = .orange
@@ -70,7 +72,7 @@ final class GamePageViewController: UIPageViewController {
         timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(changeImage), userInfo: nil, repeats: true)
     }
 }
-
+//MARK: - Extension UIPageViewController
 
 extension GamePageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     

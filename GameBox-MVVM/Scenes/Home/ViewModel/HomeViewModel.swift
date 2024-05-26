@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//MARK: -Protocols
 protocol HomeViewModelDelegate: AnyObject {
     func showLoadingView()
     func hideLoadingView()
@@ -27,6 +27,7 @@ protocol HomeViewModelProtocol {
     func filterGames(with searchText: String)
 }
 
+//MARK: - ViewModel
 final class HomeViewModel: HomeViewModelProtocol {
     let service: APIRequestProtocol
     private var games: [GameResults] = []
@@ -64,7 +65,6 @@ final class HomeViewModel: HomeViewModelProtocol {
         let gameResult = gameList[index.item]
         let ratingString = String(format: "%.1f", gameResult.rating ?? 0.0)
         let roundedRating = Double(ratingString) ?? 0.0
-        
         var releaseYear = "N/A"
         if let releaseDateString = gameResult.released, let releaseDate = DateFormatter.gameDateFormatter.date(from: releaseDateString) {
             releaseYear = DateFormatter.yearFormatter.string(from: releaseDate)

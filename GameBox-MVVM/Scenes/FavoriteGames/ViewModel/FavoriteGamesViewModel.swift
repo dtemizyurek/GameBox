@@ -4,9 +4,11 @@
 //
 //  Created by Doğukan Temizyürek on 25.05.2024.
 //
+
 import Foundation
 import CoreData
 
+// MARK: - Protocols
 protocol FavoriteGamesViewModelDelegate: AnyObject {
     func reloadData()
     func showLoadingView()
@@ -25,7 +27,9 @@ protocol FavoriteGameViewModelProtocol {
     func game(at indexPath: IndexPath) -> GameDetail
 }
 
+// MARK: - ViewModel
 final class FavoriteGamesViewModel: FavoriteGameViewModelProtocol {
+    // MARK: - Properties
     weak var delegate: FavoriteGamesViewModelDelegate?
     private(set) var filteredVideoGames = [GameDetail]()
     private(set) var isFiltering: Bool = false
@@ -35,11 +39,13 @@ final class FavoriteGamesViewModel: FavoriteGameViewModelProtocol {
     private let apiRequest: APIRequestProtocol
     private let coreDataManager: CoreDataManager
     
+    // MARK: - Initialization
     init(coreDataManager: CoreDataManager = CoreDataManager.shared, apiRequest: APIRequestProtocol = APIRequest()) {
         self.coreDataManager = coreDataManager
         self.apiRequest = apiRequest
     }
     
+    // MARK: - Public Methods
     func loadFavoriteGames() {
         favouriteGameIDS.removeAll()
         let context = coreDataManager.context
@@ -61,37 +67,6 @@ final class FavoriteGamesViewModel: FavoriteGameViewModelProtocol {
                     self.delegate?.showError("Error fetching favorite games")
                 }
             }
-        }
-    }
-    
-    private func checkFavoriteUpdates() {
-        delegate?.showLoadingView()
-        self.gamesSource.removeAll()
-        self.filteredVideoGames.removeAll()
-        self.dataSource.removeAll()
-        
-        let group = DispatchGroup()
-        
-        for id in favouriteGameIDS {
-            group.enter()
-            apiRequest.getGamesDetails(id: "\(id)") { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let success):
-                        self.gamesSource.append(success)
-                    case .failure(let error):
-                        print("Error fetching game details for id \(id): \(error)")
-                    }
-                    group.leave()
-                }
-            }
-        }
-        
-        group.notify(queue: DispatchQueue.main) {
-            self.delegate?.hideLoadingView()
-            guard !self.gamesSource.isEmpty else { return }
-            self.dataSource = self.gamesSource
-            self.delegate?.reloadData()
         }
     }
     
@@ -129,8 +104,41 @@ final class FavoriteGamesViewModel: FavoriteGameViewModelProtocol {
             metacritic: selectedGame.metacritic,
             name: selectedGame.name,
             backgroundImage: selectedGame.backgroundImage,
-            isFav: true // Assume that all games here are favorite
+            isFav: true
         )
         delegate?.navigateToGameDetails(with: uiModel)
     }
+    
+    // MARK: - Private Methods
+    private func checkFavoriteUpdates() {
+        delegate?.showLoadingView()
+        self.gamesSource.removeAll()
+        self.filteredVideoGames.removeAll()
+        self.dataSource.removeAll()
+        
+        let group = DispatchGroup()
+        
+        for id in favouriteGameIDS {
+            group.enter()
+            apiRequest.getGamesDetails(id: "\(id)") { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let success):
+                        self.gamesSource.append(success)
+                    case .failure(let error):
+                        print("Error fetching game details for id \(id): \(error)")
+                    }
+                    group.leave()
+                }
+            }
+        }
+        
+        group.notify(queue: DispatchQueue.main) {
+            self.delegate?.hideLoadingView()
+            guard !self.gamesSource.isEmpty else { return }
+            self.dataSource = self.gamesSource
+            self.delegate?.reloadData()
+        }
+    }
 }
+

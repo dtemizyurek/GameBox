@@ -8,12 +8,15 @@
 import UIKit
 
 final class DetailedGamesViewController: UIViewController {
+    //MARK: - IBOutlets
     @IBOutlet weak var relaseDate: UILabel!
     @IBOutlet weak var metaCriticPointLabel: UILabel!
     @IBOutlet weak var gameDescTextView: UITextView!
     @IBOutlet weak var gameTitleLabel: UILabel!
     @IBOutlet weak var gameImage: UIImageView!
     @IBOutlet weak var addFavoriteButton: UIButton!
+    @IBOutlet weak var systemRequirmentsTextView: UITextView!
+    //MARK: - Variables
     var viewModel: DetailedGamesViewModel!
     
     private let blurEffectView: UIVisualEffectView = {
@@ -33,7 +36,8 @@ final class DetailedGamesViewController: UIViewController {
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
         return gradientLayer
     }()
-              
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -42,6 +46,7 @@ final class DetailedGamesViewController: UIViewController {
         viewModel.fetchGameImage()
     }
     
+    //MARK: - Private Functions
     private func setupUI() {
         gameTitleLabel.text = viewModel.gameModel.name
         setupBlurEffect()
@@ -67,12 +72,14 @@ final class DetailedGamesViewController: UIViewController {
         addFavoriteButton.setImage(buttonImage, for: .normal)
     }
     
+    //MARK: - Button action
     @IBAction func addFavoriteAction(_ sender: Any) {
         viewModel.toggleFavoriteStatus()
         print("Favorite button clicked for game: \(viewModel.gameModel.name ?? "Unknown")")
     }
 }
 
+//MARK: - Extesion ViewModelDelegate
 extension DetailedGamesViewController: DetailedGamesViewModelDelegate {
     func showLoadingView() {
         showLoading()
@@ -130,4 +137,5 @@ extension DetailedGamesViewController: DetailedGamesViewModelDelegate {
     }
 }
 
+//MARK: - Extension LoadingShowable
 extension DetailedGamesViewController: LoadingShowable {}

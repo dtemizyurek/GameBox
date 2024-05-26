@@ -6,13 +6,13 @@
 //
 
 import Foundation
-
+//MARK: - Protocol
 protocol GamePageViewModelProtocol {
     var games: [GamesUIModel] { get }
     var onGamesUpdated: (() -> Void)? { get set }
     func fetchGames()
 }
-
+//MARK: - ViewModel
 final class GamePageViewModel: GamePageViewModelProtocol {
     private(set) var games: [GamesUIModel] = [] {
         didSet {

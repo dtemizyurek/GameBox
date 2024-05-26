@@ -5,10 +5,10 @@
 //  Created by Doğukan Temizyürek on 25.05.2024.
 //
 
-// DetailedGamesViewModel.swift
 import Foundation
 import CoreData
 
+// MARK: - Protocols
 protocol DetailedGamesViewModelDelegate: AnyObject {
     func didFetchGameDetails(_ details: String)
     func didFetchGameImage(_ data: Data?)
@@ -18,18 +18,22 @@ protocol DetailedGamesViewModelDelegate: AnyObject {
     func showError(_ message: String)
 }
 
+// MARK: - ViewModel
 class DetailedGamesViewModel {
+    // MARK: - Properties
     weak var delegate: DetailedGamesViewModelDelegate?
     var gameModel: GamesUIModel
     private let apiRequest: APIRequestProtocol
     private let coreDataManager: CoreDataManager
 
+    // MARK: - Initialization
     init(gameModel: GamesUIModel, apiRequest: APIRequestProtocol = APIRequest(), coreDataManager: CoreDataManager = CoreDataManager.shared) {
         self.gameModel = gameModel
         self.apiRequest = apiRequest
         self.coreDataManager = coreDataManager
     }
 
+    // MARK: - Public Methods
     func fetchGameDetails() {
         self.delegate?.showLoadingView()
         apiRequest.getGamesDetails(id: String(gameModel.id)) { [weak self] result in
@@ -49,7 +53,6 @@ class DetailedGamesViewModel {
             }
         }
     }
-
 
     func fetchGameImage() {
         self.delegate?.showLoadingView()
@@ -83,6 +86,7 @@ class DetailedGamesViewModel {
         }
     }
 
+    // MARK: - Private Methods
     private func addToFavorites() {
         let context = coreDataManager.context
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteVideoGames")
@@ -112,7 +116,6 @@ class DetailedGamesViewModel {
         }
     }
 
-
     private func removeFromFavorites() {
         let context = coreDataManager.context
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteVideoGames")
@@ -123,7 +126,6 @@ class DetailedGamesViewModel {
             for entity in fetchedResults! {
                 context.delete(entity)
                 print("Deleted game with ID: \(gameModel.id)")
-
             }
             try context.save()
         } catch {
@@ -131,3 +133,4 @@ class DetailedGamesViewModel {
         }
     }
 }
+
