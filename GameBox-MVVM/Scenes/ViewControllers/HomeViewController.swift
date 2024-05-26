@@ -80,7 +80,7 @@ extension HomeViewController: ConfigureCollectionView {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: GamesCollectionViewCell.self, indexPath: indexPath)
         if let game = viewModel?.game(index: indexPath) {
-            cell.configure(games: game)
+            cell.configureHome(games: game)
         }
         return cell
     }
@@ -141,3 +141,5 @@ extension HomeViewController: UIScrollViewDelegate {
 }
 
 extension HomeViewController: LoadingShowable {}
+
+

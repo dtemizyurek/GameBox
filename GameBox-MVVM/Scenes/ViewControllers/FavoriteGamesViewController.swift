@@ -71,7 +71,7 @@ final class FavoriteGamesViewController: UIViewController {
                 return UICollectionViewCell()
             }
             guard let game = viewModel?.game(at: indexPath) else { return .init() }
-            cell.configure(games: game)
+            cell.configureDetail(games: game)
             return cell
         }
         
