@@ -10,13 +10,13 @@ import UIKit
 final class DetailedGamesViewController: UIViewController {
     @IBOutlet weak var relaseDate: UILabel!
     @IBOutlet weak var metaCriticPointLabel: UILabel!
-    @IBOutlet weak var gameDescriptionLabel: UILabel!
+    @IBOutlet weak var gameDescTextView: UITextView!
     @IBOutlet weak var gameTitleLabel: UILabel!
     @IBOutlet weak var gameImage: UIImageView!
     @IBOutlet weak var addFavoriteButton: UIButton!
     
     var viewModel: DetailedGamesViewModel!
-        
+              
         override func viewDidLoad() {
             super.viewDidLoad()
             setupUI()
@@ -31,27 +31,26 @@ final class DetailedGamesViewController: UIViewController {
         }
         
         private func updateFavoriteButton() {
-            let buttonTitle = (viewModel.gameModel.isFav ?? false) ? "" : ""
-            addFavoriteButton.setTitle(buttonTitle, for: .normal)
+            let buttonImage = (viewModel.gameModel.isFav ?? false) ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
             addFavoriteButton.setTitleColor((viewModel.gameModel.isFav ?? false) ? .systemOrange : .gray, for: .normal)
+            addFavoriteButton.setImage(buttonImage, for: .normal)
         }
         
         @IBAction func addFavoriteAction(_ sender: Any) {
             viewModel.toggleFavoriteStatus()
             print("Favorite button clicked for game: \(viewModel.gameModel.name ?? "Unknown")")
-            
         }
     }
 
-extension DetailedGamesViewController: DetailedGamesViewModelDelegate {
-    func showLoadingView() {
-        showLoading()
-    }
-    
-    func hideLoadingView() {
-        hideLoading()
-    }
-    
+    extension DetailedGamesViewController: DetailedGamesViewModelDelegate {
+        func showLoadingView() {
+            showLoading()
+        }
+        
+        func hideLoadingView() {
+            hideLoading()
+        }
+        
         func didFetchGameDetails(_ details: String) {
             DispatchQueue.main.async {
                 let detailComponents = details.split(separator: "\n", maxSplits: 3, omittingEmptySubsequences: true)
@@ -68,9 +67,9 @@ extension DetailedGamesViewController: DetailedGamesViewModelDelegate {
                 }
                 
                 if detailComponents.count > 3 {
-                    self.gameDescriptionLabel.text = String(detailComponents[3])
+                    self.gameDescTextView.text = String(detailComponents[3])
                 } else {
-                    self.gameDescriptionLabel.text = details
+                    self.gameDescTextView.text = details
                 }
             }
         }
@@ -99,4 +98,5 @@ extension DetailedGamesViewController: DetailedGamesViewModelDelegate {
             }
         }
     }
-extension DetailedGamesViewController: LoadingShowable {}
+
+    extension DetailedGamesViewController: LoadingShowable {}

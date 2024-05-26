@@ -17,7 +17,7 @@ final class FavoriteGamesViewController: UIViewController {
                 viewModel?.delegate = self
             }
         }
-        
+    
         override func viewDidLoad() {
             super.viewDidLoad()
             setupUI()

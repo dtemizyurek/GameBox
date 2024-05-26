@@ -85,20 +85,33 @@ class DetailedGamesViewModel {
 
     private func addToFavorites() {
         let context = coreDataManager.context
-        guard let entity = NSEntityDescription.entity(forEntityName: "FavoriteVideoGames", in: context) else {
-            delegate?.showError("Could not find entity description!")
-            return
-        }
-        let newGame = NSManagedObject(entity: entity, insertInto: context)
-        newGame.setValue(gameModel.id, forKey: "favoriteGameId")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteVideoGames")
+        fetchRequest.predicate = NSPredicate(format: "favoriteGameId = %@", "\(gameModel.id)")
         
         do {
-            try context.save()
-            print("Saved game with ID: \(gameModel.id)")
+            let results = try context.fetch(fetchRequest)
+            if results.isEmpty {
+                guard let entity = NSEntityDescription.entity(forEntityName: "FavoriteVideoGames", in: context) else {
+                    delegate?.showError("Could not find entity description!")
+                    return
+                }
+                let newGame = NSManagedObject(entity: entity, insertInto: context)
+                newGame.setValue(gameModel.id, forKey: "favoriteGameId")
+                
+                do {
+                    try context.save()
+                    print("Saved game with ID: \(gameModel.id)")
+                } catch {
+                    delegate?.showError("Could not be saved!")
+                }
+            } else {
+                delegate?.showError("Game is already in favorites!")
+            }
         } catch {
-            delegate?.showError("Could not be saved!")
+            delegate?.showError("Failed to check if the game is already in favorites!")
         }
     }
+
 
     private func removeFromFavorites() {
         let context = coreDataManager.context
