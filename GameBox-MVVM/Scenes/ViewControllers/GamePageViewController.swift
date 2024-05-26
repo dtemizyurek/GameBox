@@ -50,7 +50,10 @@ final class GamePageViewController: UIPageViewController {
     func populateItems(gameSource: [GamesUIModel]) {
         self.gameSource = gameSource
         self.items.removeAll()
-        for game in gameSource {
+        
+        let limitedGameSource = Array(gameSource.prefix(3)) // İlk üç oyunu almak için
+        
+        for game in limitedGameSource {
             let vc = UIViewController()
             let gameView = GamePageView(frame: view.frame)
             vc.view.addSubview(gameView)

@@ -96,6 +96,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ofs-Rm-EC6">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="systemOrangeColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
